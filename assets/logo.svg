@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" role="img" aria-label="XOS Coaching">
+  <circle cx="20" cy="20" r="16" fill="none" stroke="#c9a24b" stroke-width="2.5"/>
+  <line x1="6" y1="6" x2="34" y2="34" stroke="#f4f4f4" stroke-width="2.5"/>
+  <line x1="34" y1="6" x2="6" y2="34" stroke="#f4f4f4" stroke-width="2.5"/>
+  <ellipse cx="20" cy="20" rx="9" ry="5.5" fill="#0d0d0d" stroke="#c9a24b" stroke-width="2"/>
+  <line x1="14" y1="20" x2="26" y2="20" stroke="#f4f4f4" stroke-width="1.5"/>
+</svg>
