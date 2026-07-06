@@ -79,3 +79,18 @@ h1,h2,h3{font-family:var(--font-display);font-weight:400;letter-spacing:.01em;li
 
 /* commitments */
 .commit-list{display:flex;flex-wrap:wrap;justify-content:center;gap:.5rem 1.25rem;font-weight:700}
+
+/* contact form */
+.contact-grid{display:grid;grid-template-columns:1fr;gap:1.5rem}
+@media(min-width:900px){.contact-grid{grid-template-columns:1.4fr 1fr}}
+.field label{display:block;color:var(--muted);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:.3rem}
+.field input,.field select,.field textarea{width:100%;background:#1a1a1a;border:1px solid var(--line);border-radius:4px;color:var(--text);padding:.6rem;font-family:var(--font-body)}
+.field{margin-bottom:.8rem}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
+.field input:focus,.field select:focus,.field textarea:focus{outline:2px solid var(--gold);border-color:var(--gold)}
+.field.required label::after{content:" *";color:var(--gold)}
+.form-status{margin-top:.8rem;padding:.8rem;border-radius:4px;display:none}
+.form-status.ok{display:block;background:#14351f;color:#7fdca0}
+.form-status.err{display:block;background:#3a1414;color:#f0a0a0}
+.contact-info a{color:var(--gold)}
+.contact-info div{margin:.5rem 0}

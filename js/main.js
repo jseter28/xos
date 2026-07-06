@@ -26,5 +26,22 @@ function initLightbox(){
   box.addEventListener("click",e=>{if(e.target===box) shut();});
   document.addEventListener("keydown",e=>{if(e.key==="Escape") shut();});
 }
-function initContactForm(){ /* Task 5 */ }
+function initContactForm(){
+  const form=document.getElementById("booking-form");
+  if(!form) return;
+  const status=document.getElementById("form-status");
+  form.addEventListener("submit",e=>{
+    e.preventDefault();
+    if(!form.checkValidity()){
+      status.className="form-status err";
+      status.textContent="Please fill in all required fields.";
+      form.reportValidity();
+      return;
+    }
+    // Delivery wired later (Formspree). For now, confirm on-page.
+    status.className="form-status ok";
+    status.textContent="Thanks — we'll be in touch within 24 hours.";
+    form.reset();
+  });
+}
 document.addEventListener("DOMContentLoaded",()=>{ initMenu(); initLightbox(); initContactForm(); });
