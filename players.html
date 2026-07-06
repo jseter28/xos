@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>XOS Coaching — Players & Gallery</title>
+  <meta name="description" content="Meet our featured quarterbacks and see the XOS Coaching training experience. View our gallery of elite QB development.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="icon" href="assets/logo.svg">
+</head>
+<body>
+  <header class="site-header">
+    <a href="index.html" aria-label="XOS Coaching home"><img class="logo" src="assets/logo.svg" alt="XOS Coaching"></a>
+    <button class="menu-toggle" aria-label="Open menu" aria-controls="site-menu" aria-expanded="false">
+      <svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="15" fill="none" stroke="currentColor" stroke-width="3"/><line x1="8" y1="8" x2="32" y2="32" stroke="currentColor" stroke-width="3"/><line x1="32" y1="8" x2="8" y2="32" stroke="currentColor" stroke-width="3"/></svg>
+    </button>
+  </header>
+
+  <main>
+    <section class="page-banner"><div class="container"><p class="label">XOS Coaching</p><h1>Players</h1></div></section>
+
+    <section class="section container">
+      <p class="label" style="text-align:center;display:block">Featured QBs</p>
+      <div class="cards" style="margin-top:1rem">
+        <div><img src="images/player1.jpg" alt="Featured quarterback" style="border-radius:6px"><p style="font-weight:800;margin-top:.4rem">Player Name</p><p style="color:var(--muted);font-size:.85rem">QB · School</p></div>
+        <div><img src="images/player2.jpg" alt="Featured quarterback" style="border-radius:6px"><p style="font-weight:800;margin-top:.4rem">Player Name</p><p style="color:var(--muted);font-size:.85rem">QB · School</p></div>
+        <div><img src="images/player3.jpg" alt="Featured quarterback" style="border-radius:6px"><p style="font-weight:800;margin-top:.4rem">Player Name</p><p style="color:var(--muted);font-size:.85rem">QB · School</p></div>
+      </div>
+    </section>
+
+    <section class="slash"><div class="container">
+      <h2 style="text-align:center;font-size:1.4rem;margin-bottom:1rem">Commitments &amp; Placements</h2>
+      <div class="commit-list"><span>ARKANSAS</span><span>MEMPHIS</span><span>ARIZONA</span><span>+ MORE</span></div>
+    </div></section>
+
+    <section class="section container">
+      <p class="label" style="text-align:center;display:block;margin-bottom:1rem">Gallery</p>
+      <div class="gallery">
+        <img src="images/g1.jpg" data-full="images/g1.jpg" alt="Training session">
+        <img src="images/g2.jpg" data-full="images/g2.jpg" alt="Quarterback throwing">
+        <img src="images/g3.jpg" data-full="images/g3.jpg" alt="Camp day">
+        <img src="images/g4.jpg" data-full="images/g4.jpg" alt="On-field coaching">
+        <img src="images/g5.jpg" data-full="images/g5.jpg" alt="Group session">
+        <img src="images/g6.jpg" data-full="images/g6.jpg" alt="Quarterback drill">
+        <img src="images/g7.jpg" data-full="images/g7.jpg" alt="Player portrait">
+        <img src="images/g8.jpg" data-full="images/g8.jpg" alt="Game action">
+      </div>
+    </section>
+
+    <section class="section" style="background:linear-gradient(135deg,#1a1a1a,#000);text-align:center"><div class="container">
+      <h2 style="font-size:2rem">Be the Next One</h2>
+      <a class="btn btn-gold" href="contact.html" style="margin-top:1rem">BOOK TRAINING →</a>
+    </div></section>
+  </main>
+
+  <div class="site-menu" id="site-menu" role="dialog" aria-modal="true" aria-label="Site menu">
+    <button class="menu-toggle menu-close" aria-label="Close menu">✕</button>
+    <nav>
+      <a href="about.html">Who We Are</a>
+      <a href="training.html">What We Do</a>
+      <a href="players.html" aria-current="page">Players</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <div class="menu-foot">KOLT &amp; RAFE PEAVEY · @XOSCOACHING</div>
+  </div>
+
+  <footer class="site-footer">
+    <span><img class="logo" src="assets/logo.svg" alt="">XOS COACHING</span>
+    <span>© 2026 XOS Coaching · @xoscoaching</span>
+  </footer>
+
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer">
+    <button class="lb-close" aria-label="Close">✕</button>
+    <img src="" alt="">
+  </div>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

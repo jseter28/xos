@@ -10,6 +10,21 @@ function initMenu(){
   menu.querySelectorAll("nav a").forEach(a=>a.addEventListener("click",shut));
   document.addEventListener("keydown",e=>{if(e.key==="Escape") shut();});
 }
-function initLightbox(){ /* Task 4 */ }
+function initLightbox(){
+  const gallery=document.querySelector(".gallery");
+  const box=document.getElementById("lightbox");
+  if(!gallery||!box) return;
+  const img=box.querySelector("img");
+  const closeBtn=box.querySelector(".lb-close");
+  const shut=()=>{box.classList.remove("open");document.body.style.overflow="";};
+  gallery.addEventListener("click",e=>{
+    const t=e.target.closest("img"); if(!t) return;
+    img.src=t.dataset.full||t.src; img.alt=t.alt;
+    box.classList.add("open"); document.body.style.overflow="hidden";
+  });
+  closeBtn.addEventListener("click",shut);
+  box.addEventListener("click",e=>{if(e.target===box) shut();});
+  document.addEventListener("keydown",e=>{if(e.key==="Escape") shut();});
+}
 function initContactForm(){ /* Task 5 */ }
 document.addEventListener("DOMContentLoaded",()=>{ initMenu(); initLightbox(); initContactForm(); });
