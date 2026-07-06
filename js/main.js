@@ -1,5 +1,5 @@
 function initMenu(){
-  const toggle=document.querySelector(".menu-toggle");
+  const toggle=document.querySelector(".site-header .menu-toggle");
   const menu=document.getElementById("site-menu");
   if(!toggle||!menu) return;
   const close=menu.querySelector(".menu-close");
@@ -17,12 +17,21 @@ function initLightbox(){
   const img=box.querySelector("img");
   const closeBtn=box.querySelector(".lb-close");
   const shut=()=>{box.classList.remove("open");document.body.style.overflow="";};
-  gallery.addEventListener("click",e=>{
-    const t=e.target.closest("img"); if(!t) return;
+  const openFrom=t=>{
     img.src=t.dataset.full||t.src; img.alt=t.alt;
     box.classList.add("open"); document.body.style.overflow="hidden";
+  };
+  gallery.addEventListener("click",e=>{
+    const t=e.target.closest("img"); if(!t) return;
+    openFrom(t);
   });
-  closeBtn.addEventListener("click",shut);
+  gallery.addEventListener("keydown",e=>{
+    if(e.key!=="Enter"&&e.key!==" "&&e.key!=="Spacebar") return;
+    const t=e.target.closest("img"); if(!t) return;
+    e.preventDefault();
+    openFrom(t);
+  });
+  if(closeBtn) closeBtn.addEventListener("click",shut);
   box.addEventListener("click",e=>{if(e.target===box) shut();});
   document.addEventListener("keydown",e=>{if(e.key==="Escape") shut();});
 }
