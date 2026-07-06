@@ -1,0 +1,9 @@
+# macOS
+.DS_Store
+
+# Brainstorming companion (local design mockups)
+.superpowers/
+
+# Editor
+.vscode/
+.idea/
