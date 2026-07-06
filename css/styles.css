@@ -44,12 +44,12 @@ h1,h2,h3{font-family:var(--font-display);font-weight:400;letter-spacing:.01em;li
 .site-footer .logo{width:26px;height:26px;vertical-align:middle;margin-right:.4rem}
 
 /* hero & home */
-.hero{position:relative;min-height:88vh;display:flex;align-items:flex-end;overflow:hidden;background:#c9c4b8}
-.hero__collage{position:absolute;inset:0;z-index:0}
-.hero__collage img{position:absolute;bottom:0;height:auto}
-.hero__watermark{position:absolute;top:44%;left:50%;transform:translate(-50%,-50%);font-family:var(--font-display);font-size:32vw;color:#000;opacity:.08;z-index:0;pointer-events:none;line-height:1}
-.hero__scrim{position:absolute;inset:0;background:linear-gradient(0deg,#000000aa,transparent 55%);z-index:1}
-.hero__inner{position:relative;z-index:2;padding:0 1.25rem 2.5rem}
+.hero{position:relative;min-height:86vh;display:flex;align-items:flex-end;overflow:hidden;background:#0d0d0d}
+.hero__collage{position:absolute;inset:0;z-index:0;display:flex}
+.hero__collage img{flex:1 1 0;width:0;height:100%;object-fit:cover;object-position:center 25%}
+.hero__watermark{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:var(--font-display);font-size:34vw;color:#fff;opacity:.12;z-index:2;pointer-events:none;line-height:1;letter-spacing:-.02em}
+.hero__scrim{position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.8) 0%,rgba(0,0,0,.45) 45%,rgba(0,0,0,.2) 100%);z-index:1}
+.hero__inner{position:relative;z-index:3;padding:0 1.25rem 2.75rem}
 .hero h1{color:#fff;font-size:clamp(2.75rem,10vw,6rem);text-shadow:0 2px 12px #0009}
 .hero .cta{margin-top:1.25rem}
 .slash{background:var(--gold);color:var(--ink);clip-path:polygon(0 8%,100% 0,100% 92%,0 100%);padding:2.5rem 0}
