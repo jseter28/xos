@@ -94,3 +94,8 @@ h1,h2,h3{font-family:var(--font-display);font-weight:400;letter-spacing:.01em;li
 .form-status.err{display:block;background:#3a1414;color:#f0a0a0}
 .contact-info a{color:var(--gold)}
 .contact-info div{margin:.5rem 0}
+
+/* about page */
+.about-coach{display:flex;gap:1.25rem;align-items:center;flex-wrap:wrap}
+.about-coach img{width:120px;height:150px;object-fit:cover;border-radius:6px}
+@media(min-width:640px){.about-coach.reverse{flex-direction:row-reverse;text-align:right}}
