@@ -293,32 +293,17 @@ h1,h2,h3{font-family:var(--font-display);font-weight:700;letter-spacing:.2em;lin
 }
 .arrival-mark{position:relative;z-index:3;text-align:center}
 .arrival-logo{line-height:0}
-/* --- XOS lightsaber-ignition wordmark --- */
+/* --- XOS wordmark: solid Archivo Black outlines, saber-trace reveal --- */
+/* The saber is the MASK, not the letter. Glyphs are flat fills; an animated
+   stroke uncovers them. Mask strokes are deliberately OVERWEIGHT (wider than
+   the stem) and overshoot the glyph — that is safe because each glyph has its
+   own mask, so a stroke can never spill into a neighbour. Sizing them to the
+   stem is what produced the old white-core-in-gold-ring tube. */
 .xos-mark{
   width:clamp(16rem,72vw,46rem);height:auto;display:block;margin:0 auto;
-  filter:drop-shadow(0 0 18px rgba(var(--neon),.55)) drop-shadow(0 0 46px rgba(var(--neon-deep),.4));
+  overflow:visible;
 }
-.xos-mark path{fill:none;stroke-linecap:round;stroke-linejoin:round;
-  stroke-dasharray:1;stroke-dashoffset:1;
-  animation:xos-draw .65s cubic-bezier(.2,.8,.2,1) var(--xd,0s) both;
-}
-/* layer opacity lives on the GROUP so overlapping strokes inside a layer
-   (S midpoint, X crossing) do not compound their alpha */
-/* Stroke widths are derived from the real Josefin Sans 700 caps: the glyph
-   stem measures 150/1000 upm, and the mark's viewBox is font units x 0.2 —
-   so the LIT TUBE (.xos-mid) is 30 units = Josefin's exact stem weight.
-   The core is the white-hot filament inside it and the halo its bloom.
-   (Anchoring .xos-core to the stem instead would make the halo 140 units
-   wide on a 147-unit cap height — it closes the O's counter into a blob.) */
-.xos-mark .xos-halo{stroke:var(--gold);stroke-width:50;opacity:.35}
-.xos-mark .xos-mid{stroke:var(--hot);stroke-width:30;opacity:.8}
-.xos-mark .xos-core{stroke:var(--head);stroke-width:16;opacity:1}
-/* core layer gets a bloom flash the instant it finishes drawing */
-.xos-mark .xos-core{
-  animation:xos-flash .2s ease-out calc(var(--xd,0s) + .62s) both;
-}
-@keyframes xos-draw{0%{stroke-dashoffset:1;stroke-opacity:0}2%{stroke-opacity:1}100%{stroke-dashoffset:0}}
-@keyframes xos-flash{0%{filter:brightness(1)}45%{filter:brightness(2.6)}100%{filter:brightness(1)}}
+.xos-glyph{stroke:none}
 .arrival-sub{
   font-family:var(--font-mono);
   font-size:clamp(.6rem,1.6vw,.85rem);

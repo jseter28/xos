@@ -30,45 +30,21 @@
       <div class="grid-floor" aria-hidden="true"></div>
       <div class="arrival-mark">
         <div class="arrival-logo" role="img" aria-label="XOS">
-          <svg class="xos-mark" viewBox="0 0 559 210.4" aria-hidden="true" focusable="false">
-            <g class="xos-letter xos-x" style="--xd:.15s">
-              <g class="xos-halo">
-                <path pathLength="1" d="M56.3 166.3 L137.7 44.1"/>
-                <path pathLength="1" d="M138.1 166.2 L58.7 44.2"/>
-              </g>
-              <g class="xos-mid">
-                <path pathLength="1" d="M56.3 166.3 L137.7 44.1"/>
-                <path pathLength="1" d="M138.1 166.2 L58.7 44.2"/>
-              </g>
-              <g class="xos-core">
-                <path pathLength="1" d="M56.3 166.3 L137.7 44.1"/>
-                <path pathLength="1" d="M138.1 166.2 L58.7 44.2"/>
-              </g>
-            </g>
-            <g class="xos-letter xos-o" style="--xd:.4s">
-              <g class="xos-halo">
-                <path pathLength="1" d="M295.2 166.4 A60.2 61.2 0 1 1 295.2 44 A60.2 61.2 0 1 1 295.2 166.4"/>
-              </g>
-              <g class="xos-mid">
-                <path pathLength="1" d="M295.2 166.4 A60.2 61.2 0 1 1 295.2 44 A60.2 61.2 0 1 1 295.2 166.4"/>
-              </g>
-              <g class="xos-core">
-                <path pathLength="1" d="M295.2 166.4 A60.2 61.2 0 1 1 295.2 44 A60.2 61.2 0 1 1 295.2 166.4"/>
-              </g>
-            </g>
-            <g class="xos-letter xos-s" style="--xd:.65s">
-              <g class="xos-halo">
-                <path pathLength="1" d="M483.8 106.1 C473.0 101.7 462.8 97.2 454.7 88.6 C442.7 75.8 451.4 56.1 463.9 48.2 C477.1 39.8 496.7 43.8 510.1 49.3"/>
-                <path pathLength="1" d="M483.8 106.1 C493.1 110.0 501.3 114.3 507.9 122.1 C519.7 136.2 509.4 155.8 496.1 163.5 C481.3 172.1 460.5 166.7 446.0 160.7"/>
-              </g>
-              <g class="xos-mid">
-                <path pathLength="1" d="M483.8 106.1 C473.0 101.7 462.8 97.2 454.7 88.6 C442.7 75.8 451.4 56.1 463.9 48.2 C477.1 39.8 496.7 43.8 510.1 49.3"/>
-                <path pathLength="1" d="M483.8 106.1 C493.1 110.0 501.3 114.3 507.9 122.1 C519.7 136.2 509.4 155.8 496.1 163.5 C481.3 172.1 460.5 166.7 446.0 160.7"/>
-              </g>
-              <g class="xos-core">
-                <path pathLength="1" d="M483.8 106.1 C473.0 101.7 462.8 97.2 454.7 88.6 C442.7 75.8 451.4 56.1 463.9 48.2 C477.1 39.8 496.7 43.8 510.1 49.3"/>
-                <path pathLength="1" d="M483.8 106.1 C493.1 110.0 501.3 114.3 507.9 122.1 C519.7 136.2 509.4 155.8 496.1 163.5 C481.3 172.1 460.5 166.7 446.0 160.7"/>
-              </g>
+          <svg class="xos-mark" viewBox="0 -12 2773 712" aria-hidden="true" focusable="false">
+            <defs>
+              <linearGradient id="xos-s-gold" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="var(--core)"/>
+                <stop offset=".45" stop-color="var(--hot)"/>
+                <stop offset="1" stop-color="var(--gold)"/>
+              </linearGradient>
+            </defs>
+
+            <!-- Archivo Black outlines, embedded. evenodd so the O's counter is a
+                 hole regardless of contour winding. -->
+            <g class="xos-glyphs" fill-rule="evenodd">
+              <path class="xos-glyph" fill="var(--core)" d="M778 688H510L383 474H379L252 688H4L250 324L28 0H295L399 176H403L508 0H755L532 325Z"/>
+              <path class="xos-glyph" fill="var(--core)" d="M1786 344Q1786 518 1689 609Q1592 700 1414 700Q1236 700 1139.5 609.5Q1043 519 1043 344Q1043 169 1139.5 78.5Q1236 -12 1414 -12Q1592 -12 1689 79Q1786 170 1786 344ZM1269 312V376Q1269 449 1306 492Q1343 535 1414 535Q1485 535 1522.5 492Q1560 449 1560 376V312Q1560 239 1522.5 196Q1485 153 1414 153Q1343 153 1306 196Q1269 239 1269 312Z"/>
+              <path class="xos-glyph" fill="url(#xos-s-gold)" d="M2718 200V212H2511V208Q2511 178 2489 158Q2467 138 2422 138Q2378 138 2354.5 151Q2331 164 2331 183Q2331 210 2363 223Q2395 236 2466 250Q2549 267 2602.5 285.5Q2656 304 2696 346Q2736 388 2737 460Q2737 582 2654.5 641Q2572 700 2434 700Q2273 700 2183.5 646Q2094 592 2094 455H2303Q2303 507 2330 524.5Q2357 542 2414 542Q2456 542 2483.5 533Q2511 524 2511 496Q2511 471 2480.5 458.5Q2450 446 2381 432Q2297 414 2242 394.5Q2187 375 2146 330Q2105 285 2105 208Q2105 95 2192.5 41.5Q2280 -12 2414 -12Q2546 -12 2631 41.5Q2716 95 2718 200Z"/>
             </g>
           </svg>
         </div>
