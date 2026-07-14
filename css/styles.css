@@ -305,9 +305,19 @@ h1,h2,h3{font-family:var(--font-display);font-weight:700;letter-spacing:.2em;lin
   /* Gold bloom. A drop-shadow on the root <svg>, so it renders BEHIND the mark
      and can never tint a letter's interior. A shadow, not a stroke — each
      letter stays exactly one flat colour. */
-  filter:drop-shadow(0 0 22px rgba(245,193,93,.38)) drop-shadow(0 0 60px rgba(201,162,75,.28));
+  filter:drop-shadow(0 0 22px rgba(var(--neon),.38)) drop-shadow(0 0 60px rgba(var(--neon-deep),.28));
 }
-.xos-glyph{stroke:none}
+/* Glyph colours live here, NOT in SVG presentation attributes: var() inside a
+   presentation attribute is unevenly supported and falls back to black on failure.
+   --core is scoped to .xos-glyph--core (X and O only). Do NOT widen this to
+   .xos-glyph — CSS outranks presentation attributes, so it would override the S's
+   fill="url(#xos-s-gold)" and flatten its gradient to flat white. The S's fill must
+   stay an attribute: a fragment-only url(#id) in an EXTERNAL stylesheet resolves
+   against the stylesheet's URL, not the document's, in several engines. */
+.xos-glyph--core{fill:var(--core)}
+#xos-s-gold stop:nth-of-type(1){stop-color:var(--core)}
+#xos-s-gold stop:nth-of-type(2){stop-color:var(--hot)}
+#xos-s-gold stop:nth-of-type(3){stop-color:var(--gold)}
 /* Mask strokes: white reveals the glyph beneath. stroke-width is set per-path
    in the markup (X 250 / O 270 / S 300) — verified for 100% coverage. */
 .xos-trace{
@@ -594,8 +604,14 @@ h1,h2,h3{font-family:var(--font-display);font-weight:700;letter-spacing:.2em;lin
   .saber{transform:scaleX(1) !important}
   .play path{stroke-dashoffset:0 !important}
   .play circle{opacity:1 !important}
-  /* Wordmark: traces land fully drawn; tips never exist (display:none, not just
-     animation:none — a merely-stopped tip parks a hot dot on the finished mark).
+  /* Wordmark under reduced motion.
+     The dashoffset override below is LOAD-BEARING and the least obvious interaction
+     in this file: the universal animation:none above reverts each .xos-trace to its
+     BASE state, stroke-dashoffset:1 — masks fully CLOSED, revealing nothing. Without
+     this override the wordmark renders BLANK. Forcing 0 lands every trace fully drawn.
+     Tips are display:none rather than merely un-animated. Their base state is already
+     opacity:0, so they would be invisible either way; removing them outright also skips
+     creating their two drop-shadow filter surfaces.
      No filter:none here: the bloom is a static glow, not motion, and must survive. */
   .xos-mark .xos-trace{stroke-dashoffset:0 !important}
   .xos-mark .xos-tip{display:none !important}
