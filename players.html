@@ -7,7 +7,7 @@
   <meta name="description" content="Meet our featured quarterbacks and see the XOS Coaching training experience. View our gallery of elite QB development.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
   <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
 </head>
@@ -24,10 +24,28 @@
 
     <section class="section container">
       <p class="label" style="text-align:center;display:block">Featured QBs</p>
-      <div class="cards" style="margin-top:1rem">
-        <div><img src="images/player1.jpg" alt="Luke Lawrence, quarterback at Legacy Christian Academy, rolling out to pass" loading="lazy" style="border-radius:6px"><p style="font-weight:800;margin-top:.4rem">Player Name</p><p style="color:var(--muted);font-size:.85rem">QB · School</p></div>
-        <div><img src="images/player2.jpg" alt="Quarterback setting up to throw during practice" loading="lazy" style="border-radius:6px"><p style="font-weight:800;margin-top:.4rem">Player Name</p><p style="color:var(--muted);font-size:.85rem">QB · School</p></div>
-        <div><img src="images/player3.jpg" alt="Quarterback posing in uniform with the football" loading="lazy" style="border-radius:6px"><p style="font-weight:800;margin-top:.4rem">Player Name</p><p style="color:var(--muted);font-size:.85rem">QB · School</p></div>
+      <div class="roster-grid" style="margin-top:1rem">
+        <article class="dossier">
+          <img class="dossier-bg" src="images/player1.jpg" alt="Luke Lawrence, quarterback at Legacy Christian Academy, rolling out to pass" loading="lazy">
+          <div class="dossier-scrim"></div>
+          <span class="dossier-corner" aria-hidden="true"></span>
+          <span class="dossier-file">FILE.01</span>
+          <div class="dossier-meta"><b>Player Name</b><span>QB · School</span></div>
+        </article>
+        <article class="dossier">
+          <img class="dossier-bg" src="images/player2.jpg" alt="Quarterback setting up to throw during practice" loading="lazy">
+          <div class="dossier-scrim"></div>
+          <span class="dossier-corner" aria-hidden="true"></span>
+          <span class="dossier-file">FILE.02</span>
+          <div class="dossier-meta"><b>Player Name</b><span>QB · School</span></div>
+        </article>
+        <article class="dossier">
+          <img class="dossier-bg" src="images/player3.jpg" alt="Quarterback posing in uniform with the football" loading="lazy">
+          <div class="dossier-scrim"></div>
+          <span class="dossier-corner" aria-hidden="true"></span>
+          <span class="dossier-file">FILE.03</span>
+          <div class="dossier-meta"><b>Player Name</b><span>QB · School</span></div>
+        </article>
       </div>
     </section>
 
@@ -50,8 +68,8 @@
       </div>
     </section>
 
-    <section class="section" style="background:linear-gradient(135deg,#1a1a1a,#000);text-align:center"><div class="container">
-      <h2 style="font-size:2rem">Be the Next One</h2>
+    <section class="section" style="background:radial-gradient(ellipse at 50% 120%,var(--bg-warm) 0%,var(--bg) 70%);text-align:center"><div class="container">
+      <h2 class="glow-text" style="font-size:2rem">Be the Next One</h2>
       <a class="btn btn-gold" href="contact.html" style="margin-top:1rem">BOOK TRAINING →</a>
     </div></section>
   </main>
@@ -67,9 +85,26 @@
     <div class="menu-foot">KOLT &amp; RAFE PEAVEY · @XOSCOACHING</div>
   </div>
 
+  <!-- LIGHT FOOTER -->
   <footer class="site-footer">
-    <span><img class="logo" src="assets/logo.svg" alt="">XOS COACHING</span>
-    <span>© 2026 XOS Coaching · @xoscoaching</span>
+    <div class="footer-inner">
+      <div class="footer-links">
+        <div>
+          <a href="about.html">Who We Are</a>
+          <a href="training.html">Training</a>
+          <a href="players.html">Players</a>
+          <a href="contact.html">Contact</a>
+        </div>
+        <div style="text-align:right">
+          <a href="https://instagram.com/xoscoaching">@xoscoaching</a>
+          <a href="contact.html">Book Training</a>
+        </div>
+      </div>
+      <div class="footer-brand">
+        <span class="brand-word"><img class="logo" src="assets/logo.svg" alt="">XOS</span>
+        <small>© 2026 XOS Coaching · Kolt &amp; Rafe Peavey</small>
+      </div>
+    </div>
   </footer>
 
   <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer">
