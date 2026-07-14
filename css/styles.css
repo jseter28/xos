@@ -226,7 +226,8 @@ h1,h2,h3{font-family:var(--font-display);font-weight:400;letter-spacing:.01em;li
    ============================================================ */
 .ch{
   position:relative;
-  min-height:100vh;
+  min-height:100vh;  /* fallback for older browsers */
+  min-height:100svh; /* stable on mobile — no URL-bar jump */
   display:flex;align-items:center;justify-content:center;
   overflow:hidden;
   padding:5rem 0;
@@ -262,7 +263,9 @@ h1,h2,h3{font-family:var(--font-display);font-weight:400;letter-spacing:.01em;li
   flex-direction:column;
   background:linear-gradient(180deg,var(--bg) 0%,var(--bg-mid) 55%,var(--bg) 100%);
 }
-#beams{position:absolute;inset:0;z-index:1;pointer-events:none}
+/* width/height 100% is required: canvas is a replaced element, so
+   inset:0 alone would leave its CSS size at the width/height attributes */
+#beams{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none}
 /* static fallback gradient when canvas/beams are skipped */
 .beams-fallback{
   position:absolute;left:0;right:0;bottom:34%;height:46%;z-index:1;pointer-events:none;
@@ -349,10 +352,10 @@ h1,h2,h3{font-family:var(--font-display);font-weight:400;letter-spacing:.01em;li
 
 /* ---------- CH4 The Coaches ---------- */
 .ch--coaches{padding:0}
-.ch--coaches .ch__inner{max-width:none;padding:0;display:grid;grid-template-columns:1fr;min-height:100vh}
+.ch--coaches .ch__inner{max-width:none;padding:0;display:grid;grid-template-columns:1fr;min-height:100vh;min-height:100svh}
 @media(min-width:860px){.ch--coaches .ch__inner{grid-template-columns:55% 45%}}
 .coach-photo{position:relative;min-height:42vh;overflow:hidden}
-@media(min-width:860px){.coach-photo{min-height:100vh}}
+@media(min-width:860px){.coach-photo{min-height:100vh;min-height:100svh}}
 .coach-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:30% 20%}
 .coach-photo .duotone-layer{position:absolute;inset:0;filter:var(--duotone)}
 .coach-photo .duotone-layer img{position:static;width:100%;height:100%;object-fit:cover;object-position:30% 20%}
