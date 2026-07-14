@@ -313,6 +313,22 @@ h1,h2,h3{font-family:var(--font-display);font-weight:700;letter-spacing:.2em;lin
   animation:xos-draw .62s cubic-bezier(.2,.8,.2,1) var(--xd,0s) both;
 }
 @keyframes xos-draw{to{stroke-dashoffset:0}}
+/* The only part of the saber visible on top of the letters. Travels the same
+   skeleton, on the same clock, as its .xos-trace — so it sits exactly at the
+   leading edge of the reveal, then flares out as the letter completes. */
+.xos-tip{
+  fill:var(--head);
+  filter:drop-shadow(0 0 18px var(--core)) drop-shadow(0 0 40px var(--hot));
+  offset-distance:0%;opacity:0;
+  animation:
+    xos-tip-travel .62s cubic-bezier(.2,.8,.2,1) var(--xd,0s) forwards,
+    xos-tip-out .3s ease-out calc(var(--xd,0s) + .5s) forwards;
+}
+/* forwards, not both: a backwards fill would back-fill opacity:1 and park a
+   visible hot dot at each glyph's start point during its --xd delay. The tip
+   must not exist until its own trace ignites. */
+@keyframes xos-tip-travel{from{opacity:1}to{opacity:1;offset-distance:100%}}
+@keyframes xos-tip-out{0%{opacity:1;r:26}60%{opacity:1;r:34}100%{opacity:0;r:10}}
 .arrival-sub{
   font-family:var(--font-mono);
   font-size:clamp(.6rem,1.6vw,.85rem);
