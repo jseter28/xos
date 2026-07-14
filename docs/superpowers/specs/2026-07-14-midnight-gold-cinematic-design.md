@@ -42,7 +42,7 @@ they fade through greys instead of blue.
 
 ## Type system
 
-- **Anton** — display, glow-treated.
+- **Josefin Sans** — display, glow-treated (700, uppercase, 0.2em tracking).
 - **Inter** — body (add weight 300).
 - **JetBrains Mono** (new) — labels/buttons/tags, tiny, uppercase,
   0.2–0.5em tracking.
@@ -114,7 +114,7 @@ arrival via `IntersectionObserver`.
 | Chapter | Content |
 |---|---|
 | CH0 Arrival | Night sky + CSS stars, stadium-silhouette horizon with glowing 1px horizon line, canvas rising gold light-beams behind the horizon, perspective grid floor below. Centered XOS wordmark (embedded Bruno Ace outlines, white X/O + gold S, saber-trace reveal with a gold bloom) + "QUARTERBACK DEVELOPMENT" mono sub. Bottom-left "SCROLL DOWN TO DISCOVER" cue. Minimal fixed header (logo + round menu toggle, gold-on-black). |
-| CH1 Statement | One huge Anton headline alone: "Developing QBs who win **Friday nights** and reach the next level." — "Friday nights" in hot gold. |
+| CH1 Statement | One huge Josefin Sans headline alone: "Developing QBs who win **Friday nights** and reach the next level." — "Friday nights" in hot gold. |
 | CH2 The System | Glowing SVG play diagram (O-line, QB, 3 route trees) that draws itself on scroll-arrival (`stroke-dashoffset` animation) on a faint grid background. Copy block floats right: 100+ NFL & college QBs coached. |
 | CH3 The Advantage | "The XOS Advantage" + three floating text columns (On-Field 1:1 / On-Field Group / Virtual Coaching) — no cards, no boxes. |
 | CH4 The Coaches | Left 55%: duotone blue-night photo with scanline overlay, masked fade to right. Right: "Built by players who've been there" + Rafe Peavey (Former Arkansas QB), Kolt Peavey (QB Coach) as dossier entries. |
