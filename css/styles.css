@@ -29,8 +29,8 @@
   --gold-dim:#7a5a1a;
 
   --max:1200px;
-  --font-display:"Anton","Impact",sans-serif;
-  --font-body:"Inter",-apple-system,"Segoe UI",Roboto,sans-serif;
+  --font-display:"Josefin Sans","Futura","Century Gothic",sans-serif;
+  --font-body:"Quicksand",-apple-system,"Segoe UI",Roboto,sans-serif;
   --font-mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
 
   /* signature glow */
@@ -47,13 +47,14 @@ body{
   background:var(--bg);
   color:var(--text);
   font-family:var(--font-body);
-  line-height:1.6;
+  font-weight:300;
+  line-height:1.7;
   -webkit-font-smoothing:antialiased;
   overflow-x:clip;
 }
 img{max-width:100%;display:block}
 a{color:inherit;text-decoration:none}
-h1,h2,h3{font-family:var(--font-display);font-weight:400;letter-spacing:.01em;line-height:.95;text-transform:uppercase}
+h1,h2,h3{font-family:var(--font-display);font-weight:700;letter-spacing:.2em;line-height:1.1;text-transform:uppercase}
 
 .container{max-width:var(--max);margin:0 auto;padding:0 1.25rem}
 .section{padding:3.5rem 0;position:relative}
@@ -145,7 +146,8 @@ h1,h2,h3{font-family:var(--font-display);font-weight:400;letter-spacing:.01em;li
 .site-menu.open{transform:translateY(0);opacity:1;visibility:visible}
 .site-menu nav{display:flex;flex-direction:column;gap:.6rem}
 .site-menu nav a{
-  font-family:var(--font-display);font-size:2.25rem;text-transform:uppercase;
+  font-family:var(--font-display);font-size:1.4rem;text-transform:uppercase;
+  font-weight:700;letter-spacing:.2em;
   color:var(--text);width:fit-content;transition:color .18s ease,text-shadow .18s ease;
 }
 .site-menu nav a:hover,.site-menu nav a[aria-current="page"]{
@@ -157,7 +159,7 @@ h1,h2,h3{font-family:var(--font-display);font-weight:400;letter-spacing:.01em;li
   font-family:var(--font-mono);font-size:.62rem;letter-spacing:.28em;
   text-transform:uppercase;color:var(--muted);
 }
-@media (min-width:1024px){.site-menu nav a{font-size:3.5rem}}
+@media (min-width:1024px){.site-menu nav a{font-size:2.1rem}}
 
 /* ============================================================
    REUSABLE FX UTILITIES
@@ -290,13 +292,33 @@ h1,h2,h3{font-family:var(--font-display);font-weight:400;letter-spacing:.01em;li
   -webkit-mask-image:linear-gradient(180deg,black,transparent);mask-image:linear-gradient(180deg,black,transparent);
 }
 .arrival-mark{position:relative;z-index:3;text-align:center}
-.arrival-logo{
-  font-family:var(--font-display);
-  font-size:clamp(4.5rem,20vw,13rem);
-  color:var(--head);
-  letter-spacing:.42em;padding-left:.42em;line-height:1;
-  text-shadow:0 0 22px rgba(var(--neon),.65),0 0 60px rgba(var(--neon-deep),.5);
+.arrival-logo{line-height:0}
+/* --- XOS lightsaber-ignition wordmark --- */
+.xos-mark{
+  width:clamp(16rem,72vw,46rem);height:auto;display:block;margin:0 auto;
+  filter:drop-shadow(0 0 18px rgba(var(--neon),.55)) drop-shadow(0 0 46px rgba(var(--neon-deep),.4));
 }
+.xos-mark path{fill:none;stroke-linecap:round;stroke-linejoin:round;
+  stroke-dasharray:1;stroke-dashoffset:1;
+  animation:xos-draw .65s cubic-bezier(.2,.8,.2,1) var(--xd,0s) both;
+}
+/* layer opacity lives on the GROUP so overlapping strokes inside a layer
+   (S midpoint, X crossing) do not compound their alpha */
+/* Stroke widths are derived from the real Josefin Sans 700 caps: the glyph
+   stem measures 150/1000 upm, and the mark's viewBox is font units x 0.2 —
+   so the LIT TUBE (.xos-mid) is 30 units = Josefin's exact stem weight.
+   The core is the white-hot filament inside it and the halo its bloom.
+   (Anchoring .xos-core to the stem instead would make the halo 140 units
+   wide on a 147-unit cap height — it closes the O's counter into a blob.) */
+.xos-mark .xos-halo{stroke:var(--gold);stroke-width:50;opacity:.35}
+.xos-mark .xos-mid{stroke:var(--hot);stroke-width:30;opacity:.8}
+.xos-mark .xos-core{stroke:var(--head);stroke-width:16;opacity:1}
+/* core layer gets a bloom flash the instant it finishes drawing */
+.xos-mark .xos-core{
+  animation:xos-flash .2s ease-out calc(var(--xd,0s) + .62s) both;
+}
+@keyframes xos-draw{0%{stroke-dashoffset:1;stroke-opacity:0}2%{stroke-opacity:1}100%{stroke-dashoffset:0}}
+@keyframes xos-flash{0%{filter:brightness(1)}45%{filter:brightness(2.6)}100%{filter:brightness(1)}}
 .arrival-sub{
   font-family:var(--font-mono);
   font-size:clamp(.6rem,1.6vw,.85rem);
@@ -314,8 +336,9 @@ h1,h2,h3{font-family:var(--font-display);font-weight:400;letter-spacing:.01em;li
 .ch--statement{background:radial-gradient(ellipse at 50% 80%,var(--bg-mid) 0%,var(--bg) 70%)}
 .ch--statement .statement{
   font-family:var(--font-display);
-  font-size:clamp(2.4rem,7vw,6rem);
-  line-height:1.05;text-transform:uppercase;color:var(--head);
+  font-weight:700;letter-spacing:.2em;
+  font-size:clamp(1.5rem,4vw,3.4rem);
+  line-height:1.15;text-transform:uppercase;color:var(--head);
   max-width:18ch;text-shadow:0 0 22px rgba(var(--neon),.35);
 }
 .ch--statement em{font-style:normal;color:var(--hot);text-shadow:0 0 20px rgba(var(--neon),.7)}
@@ -329,7 +352,8 @@ h1,h2,h3{font-family:var(--font-display);font-weight:400;letter-spacing:.01em;li
 .system-copy p{font-size:clamp(1rem,2vw,1.3rem);line-height:1.8;color:#c6d0de;font-weight:300;max-width:34ch}
 .system-copy .num{
   display:inline-block;margin-top:1.25rem;
-  font-family:var(--font-display);font-size:clamp(2rem,5vw,3.4rem);color:var(--hot);
+  font-family:var(--font-display);font-size:clamp(1.6rem,3.6vw,2.4rem);color:var(--hot);
+  font-weight:700;letter-spacing:.06em;
   text-shadow:var(--glow-text);
 }
 .system-copy .num small{display:block;font-family:var(--font-mono);font-size:.6rem;letter-spacing:.3em;color:var(--muted);text-transform:uppercase;margin-top:.35rem}
@@ -337,8 +361,9 @@ h1,h2,h3{font-family:var(--font-display);font-weight:400;letter-spacing:.01em;li
 /* ---------- CH3 The Advantage ---------- */
 .ch--advantage .ch__inner{position:relative}
 .advantage-head{
-  font-family:var(--font-display);font-size:clamp(2rem,6vw,4.5rem);
-  color:var(--head);text-transform:uppercase;line-height:1;text-shadow:0 0 20px rgba(var(--neon),.35);
+  font-family:var(--font-display);font-size:clamp(1.35rem,3.6vw,2.6rem);
+  font-weight:700;letter-spacing:.2em;
+  color:var(--head);text-transform:uppercase;line-height:1.15;text-shadow:0 0 20px rgba(var(--neon),.35);
   max-width:12ch;
 }
 .advantage-cols{
@@ -363,14 +388,14 @@ h1,h2,h3{font-family:var(--font-display);font-weight:400;letter-spacing:.01em;li
   .coach-photo::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent 60%,var(--bg));}
 }
 .coach-copy{display:flex;flex-direction:column;justify-content:center;padding:clamp(2rem,5vw,4rem)}
-.coach-copy h3{font-family:var(--font-display);font-size:clamp(1.8rem,4vw,3.2rem);color:var(--head);line-height:1.05;text-shadow:0 0 16px rgba(var(--neon),.35)}
+.coach-copy h3{font-family:var(--font-display);font-size:clamp(1.2rem,2.6vw,2rem);color:var(--head);line-height:1.15;text-shadow:0 0 16px rgba(var(--neon),.35)}
 .dossier-entry{margin-top:1.6rem;border-left:1px solid var(--hairline);padding-left:1rem}
 .dossier-entry b{display:block;font-family:var(--font-body);font-size:1.15rem;font-weight:700;color:var(--text)}
 .dossier-entry span{font-family:var(--font-mono);font-size:.62rem;letter-spacing:.28em;color:var(--hot);text-transform:uppercase}
 
 /* ---------- CH5 The Roster ---------- */
 .ch--roster{background:var(--bg-mid)}
-.roster-head{font-family:var(--font-display);font-size:clamp(2rem,6vw,4.5rem);color:var(--head);text-shadow:0 0 16px rgba(var(--neon),.35)}
+.roster-head{font-family:var(--font-display);font-size:clamp(1.35rem,3.6vw,2.6rem);color:var(--head);text-shadow:0 0 16px rgba(var(--neon),.35)}
 .roster-grid{display:grid;grid-template-columns:1fr;gap:1rem;margin-top:2rem}
 @media(min-width:560px){.roster-grid{grid-template-columns:repeat(2,1fr)}}
 @media(min-width:960px){.roster-grid{grid-template-columns:repeat(3,1fr)}}
@@ -386,13 +411,13 @@ h1,h2,h3{font-family:var(--font-display);font-weight:400;letter-spacing:.01em;li
 .dossier .dossier-file{position:absolute;top:.7rem;right:.85rem;z-index:2;font-family:var(--font-mono);font-size:.6rem;letter-spacing:.2em;color:rgba(var(--neon),.75)}
 .dossier .dossier-corner{position:absolute;top:-1px;left:-1px;z-index:2;width:12px;height:12px;border-top:2px solid var(--hot);border-left:2px solid var(--hot)}
 .dossier .dossier-meta{position:relative;z-index:2;align-self:flex-end;padding:1rem}
-.dossier .dossier-meta b{display:block;font-family:var(--font-display);font-size:1.3rem;letter-spacing:.02em;color:var(--head)}
+.dossier .dossier-meta b{display:block;font-family:var(--font-display);font-weight:700;font-size:1rem;letter-spacing:.12em;text-transform:uppercase;color:var(--head)}
 .dossier .dossier-meta span{font-family:var(--font-mono);font-size:.6rem;letter-spacing:.22em;color:var(--hot);text-transform:uppercase}
 .roster-cta{text-align:center;margin-top:2.5rem}
 
 /* ---------- CH6 The Ask ---------- */
 .ch--ask{flex-direction:column;text-align:center;background:radial-gradient(ellipse at 50% 120%,var(--bg-warm) 0%,var(--bg) 70%)}
-.ch--ask .ask-head{font-family:var(--font-display);font-size:clamp(2.8rem,10vw,7rem);color:var(--head);text-shadow:0 0 26px rgba(var(--neon),.55);line-height:1}
+.ch--ask .ask-head{font-family:var(--font-display);font-size:clamp(1.6rem,5.5vw,3.8rem);color:var(--head);text-shadow:0 0 26px rgba(var(--neon),.55);line-height:1.15}
 .ch--ask .saber{margin:2rem auto}
 .ch--ask .btn{margin-top:.5rem}
 
@@ -427,7 +452,7 @@ h1,h2,h3{font-family:var(--font-display);font-weight:400;letter-spacing:.01em;li
   color:var(--text);padding:2.75rem 0;position:relative;
 }
 .stats{display:flex;justify-content:space-around;text-align:center;gap:1rem;flex-wrap:wrap}
-.stats .n{font-family:var(--font-display);font-size:clamp(2.2rem,5vw,3rem);color:var(--hot);text-shadow:var(--glow-text)}
+.stats .n{font-family:var(--font-display);font-weight:700;letter-spacing:.06em;font-size:clamp(1.7rem,3.6vw,2.2rem);color:var(--hot);text-shadow:var(--glow-text)}
 
 /* ============================================================
    PAGE BANNER (interior pages) — mini Tron treatment
@@ -456,7 +481,7 @@ h1,h2,h3{font-family:var(--font-display);font-weight:400;letter-spacing:.01em;li
 }
 .page-banner .container{position:relative;z-index:2;padding-bottom:1.6rem}
 .page-banner h1{
-  color:var(--head);font-size:clamp(2.2rem,7vw,4rem);
+  color:var(--head);font-size:clamp(1.4rem,4vw,2.5rem);
   text-shadow:0 0 20px rgba(var(--neon),.4);
   position:relative;padding-bottom:1rem;
 }
@@ -539,7 +564,7 @@ h1,h2,h3{font-family:var(--font-display);font-weight:400;letter-spacing:.01em;li
   display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.75rem;
   margin-top:1.4rem;border-top:1px solid #d8d6d0;padding-top:1.2rem;
 }
-.footer-brand .brand-word{font-family:var(--font-display);font-size:1.4rem;letter-spacing:.2em;color:#2a3140;display:flex;align-items:center;gap:.5rem}
+.footer-brand .brand-word{font-family:var(--font-display);font-weight:700;font-size:1.05rem;letter-spacing:.2em;color:#2a3140;display:flex;align-items:center;gap:.5rem}
 .footer-brand .brand-word .logo{width:26px;height:26px;filter:invert(.7) sepia(1) saturate(3) hue-rotate(5deg)}
 .footer-brand small{font-family:var(--font-mono);font-size:.62rem;letter-spacing:.15em;color:#9aa2b2}
 
@@ -555,4 +580,5 @@ h1,h2,h3{font-family:var(--font-display);font-weight:400;letter-spacing:.01em;li
   .saber{transform:scaleX(1) !important}
   .play path{stroke-dashoffset:0 !important}
   .play circle{opacity:1 !important}
+  .xos-mark path{stroke-dashoffset:0 !important;filter:none !important}
 }

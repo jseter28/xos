@@ -43,10 +43,17 @@ per screen, glowing wireframe scenes on a grid, sparse floating text.
 
 ### Type system
 
-- **Anton** — display headlines, glow-treated.
-- **Inter** — body copy (weights 300, 400, 600, 700, 800).
+- **Josefin Sans** — display headlines, glow-treated. Weight **700**
+  (the heaviest weight Google Fonts serves for this family — there is no 900),
+  `uppercase`, `letter-spacing: 0.2em`, `line-height: 1.1`.
+- **Quicksand** — body copy. Base weight **300**, `line-height: 1.7`.
+  Tops out at 700 — never specify 800.
 - **JetBrains Mono** — labels, buttons, tags: small, uppercase, 0.2–0.5em
   letter-tracking.
+
+Display sizes are tuned for Josefin's wide, airy metrics at 0.2em tracking.
+If you swap the display face, re-check every `clamp()` on a display element —
+a condensed face would leave them undersized, a wider one will overflow.
 
 ### Signature effects
 
