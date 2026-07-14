@@ -43,40 +43,46 @@
 
               <!-- Reveal masks. White = reveal. One mask PER GLYPH so an
                    overweight stroke can never spill into a neighbouring letter.
-                   Widths are verified to give 100% glyph coverage; do not lower
-                   them. Skeletons trace each glyph's centreline. -->
+                   Skeletons re-cut for Bruno Ace: the X is two full diagonals
+                   (the letter's broken centre is empty ink, so revealing across
+                   the gap does nothing); the O is its ring mid-line; the S walks
+                   top-bar -> right connector -> mid-bar -> left connector ->
+                   bottom-bar. Widths verified for 100% coverage; do not lower. -->
               <mask id="xos-mask-x" maskUnits="userSpaceOnUse" x="-200" y="-212" width="3173" height="1112">
-                <path class="xos-trace" pathLength="1" style="--xd:.15s" stroke-width="250" d="M121.3 -57.3L684.2 745.3"/>
-                <path class="xos-trace" pathLength="1" style="--xd:.28s" stroke-width="250" d="M672.8 -56.5L86.7 744.5"/>
+                <path class="xos-trace" pathLength="1" style="--xd:.15s" stroke-width="170" d="M-46 -26L810 714"/>
+                <path class="xos-trace" pathLength="1" style="--xd:.28s" stroke-width="170" d="M810 -26L-46 714"/>
               </mask>
               <mask id="xos-mask-o" maskUnits="userSpaceOnUse" x="-200" y="-212" width="3173" height="1112">
-                <path class="xos-trace" pathLength="1" style="--xd:.45s" stroke-width="270" d="M1414.5 70.5A258.5 273.5 0 1 1 1414.5 617.5A258.5 273.5 0 1 1 1414.5 70.5"/>
+                <path class="xos-trace" pathLength="1" style="--xd:.45s" stroke-width="150" d="M1308.4 49A381 295 0 1 1 1308.4 639A381 295 0 1 1 1308.4 49"/>
               </mask>
               <mask id="xos-mask-s" maskUnits="userSpaceOnUse" x="-200" y="-212" width="3173" height="1112">
-                <path class="xos-trace" pathLength="1" style="--xd:.7s" stroke-width="300" d="M2614 205C2610 40 2500 20 2410 25C2300 30 2215 105 2218 190C2225 265 2330 290 2430 330C2540 372 2618 405 2618 495C2618 585 2520 660 2415 655C2310 650 2205 590 2198 487"/>
+                <path class="xos-trace" pathLength="1" style="--xd:.7s" stroke-width="170" d="M1962 639L2540 639L2662 500L2540 344L1962 344L2012 196L2110 49L2658 49"/>
               </mask>
             </defs>
 
-            <!-- Archivo Black outlines, embedded. evenodd so the O's counter is a
-                 hole regardless of contour winding.
+            <!-- Bruno Ace outlines, embedded — cap-height-matched to the old
+                 cuts and laid out on the font's own advance widths, centred in
+                 the viewBox. Bruno Ace is a broken-joint face: strokes stop short
+                 of each other (that gapped look is the point). evenodd so the O's
+                 counter is a hole regardless of contour winding.
                  Fills: X and O are coloured from CSS (.xos-glyph--core). The S keeps its
                  fill as a PRESENTATION ATTRIBUTE on purpose — a fragment-only url(#id) in
                  an external stylesheet resolves against the stylesheet URL, not the
                  document, in several engines. Never add a `fill` to `.xos-glyph` in CSS:
                  CSS beats presentation attributes and would flatten the S's gradient. -->
             <g class="xos-glyphs" fill-rule="evenodd">
-              <path class="xos-glyph xos-glyph--core" mask="url(#xos-mask-x)" d="M778 688H510L383 474H379L252 688H4L250 324L28 0H295L399 176H403L508 0H755L532 325Z"/>
-              <path class="xos-glyph xos-glyph--core" mask="url(#xos-mask-o)" d="M1786 344Q1786 518 1689 609Q1592 700 1414 700Q1236 700 1139.5 609.5Q1043 519 1043 344Q1043 169 1139.5 78.5Q1236 -12 1414 -12Q1592 -12 1689 79Q1786 170 1786 344ZM1269 312V376Q1269 449 1306 492Q1343 535 1414 535Q1485 535 1522.5 492Q1560 449 1560 376V312Q1560 239 1522.5 196Q1485 153 1414 153Q1343 153 1306 196Q1269 239 1269 312Z"/>
-              <path class="xos-glyph" mask="url(#xos-mask-s)" fill="url(#xos-s-gold)" d="M2718 200V212H2511V208Q2511 178 2489 158Q2467 138 2422 138Q2378 138 2354.5 151Q2331 164 2331 183Q2331 210 2363 223Q2395 236 2466 250Q2549 267 2602.5 285.5Q2656 304 2696 346Q2736 388 2737 460Q2737 582 2654.5 641Q2572 700 2434 700Q2273 700 2183.5 646Q2094 592 2094 455H2303Q2303 507 2330 524.5Q2357 542 2414 542Q2456 542 2483.5 533Q2511 524 2511 496Q2511 471 2480.5 458.5Q2450 446 2381 432Q2297 414 2242 394.5Q2187 375 2146 330Q2105 285 2105 208Q2105 95 2192.5 41.5Q2280 -12 2414 -12Q2546 -12 2631 41.5Q2716 95 2718 200Z"/>
+              <path class="xos-glyph xos-glyph--core" mask="url(#xos-mask-x)" d="M779.6 688.0H650.8L381.5 410.8L113.2 688.0H-15.5L317.6 344.0L-15.5 0.0H113.2ZM779.6 0.0 479.8 308.6 415.9 242.8 650.8 0.0Z"/>
+              <path class="xos-glyph xos-glyph--core" mask="url(#xos-mask-o)" d="M1738.9 344.0Q1738.9 415.7 1716.2 478.2Q1693.6 540.6 1651.9 587.7Q1610.1 634.9 1552.1 661.5Q1494.1 688.0 1423.4 688.0H1194.4Q1122.6 688.0 1064.6 661.5Q1006.6 634.9 964.9 587.7Q923.1 540.6 900.5 478.2Q877.9 415.7 877.9 344.0Q877.9 273.2 900.5 210.8Q923.1 148.4 964.9 100.7Q1006.6 53.1 1064.6 26.5Q1122.6 0.0 1194.4 0.0H1423.4Q1494.1 0.0 1552.1 26.5Q1610.1 53.1 1651.9 100.7Q1693.6 148.4 1716.2 210.8Q1738.9 273.2 1738.9 344.0ZM1640.6 344.0Q1640.6 276.2 1614.5 220.2Q1588.5 164.1 1539.8 131.2Q1491.2 98.3 1423.4 98.3H1194.4Q1126.5 98.3 1077.9 131.2Q1029.2 164.1 1002.7 220.2Q976.2 276.2 976.2 344.0Q976.2 411.8 1002.7 467.3Q1029.2 522.9 1077.9 556.3Q1126.5 589.7 1194.4 589.7H1423.4Q1491.2 589.7 1539.8 556.3Q1588.5 522.9 1614.5 467.3Q1640.6 411.8 1640.6 344.0Z"/>
+              <path class="xos-glyph" mask="url(#xos-mask-s)" fill="url(#xos-s-gold)" d="M2708.0 491.4Q2708.0 545.5 2681.4 590.2Q2654.9 634.9 2610.6 661.5Q2566.4 688.0 2511.4 688.0H1913.8V589.7H2511.4Q2552.7 589.7 2581.2 560.7Q2609.7 531.7 2609.7 491.4Q2609.7 451.1 2581.2 422.1Q2552.7 393.1 2511.4 393.1H2110.4Q2056.3 393.1 2011.6 366.6Q1966.9 340.1 1940.3 295.3Q1913.8 250.6 1913.8 196.6Q1913.8 142.5 1940.3 97.8Q1966.9 53.1 2011.6 26.5Q2056.3 0.0 2110.4 0.0H2658.8V98.3H2110.4Q2070.1 98.3 2041.1 127.3Q2012.1 156.3 2012.1 196.6Q2012.1 236.9 2041.1 265.9Q2070.1 294.9 2110.4 294.9H2511.4Q2566.4 294.9 2610.6 321.4Q2654.9 347.9 2681.4 392.7Q2708.0 437.4 2708.0 491.4Z"/>
             </g>
 
             <!-- Hot tips: ride the leading edge of each trace. Same d, same
                  timing, same --xd as the matching .xos-trace above. -->
             <g class="xos-tips" aria-hidden="true">
-              <circle class="xos-tip" r="26" style="--xd:.15s;offset-path:path('M121.3 -57.3L684.2 745.3')"/>
-              <circle class="xos-tip" r="26" style="--xd:.28s;offset-path:path('M672.8 -56.5L86.7 744.5')"/>
-              <circle class="xos-tip" r="26" style="--xd:.45s;offset-path:path('M1414.5 70.5A258.5 273.5 0 1 1 1414.5 617.5A258.5 273.5 0 1 1 1414.5 70.5')"/>
-              <circle class="xos-tip" r="26" style="--xd:.7s;offset-path:path('M2614 205C2610 40 2500 20 2410 25C2300 30 2215 105 2218 190C2225 265 2330 290 2430 330C2540 372 2618 405 2618 495C2618 585 2520 660 2415 655C2310 650 2205 590 2198 487')"/>
+              <circle class="xos-tip" r="26" style="--xd:.15s;offset-path:path('M-46 -26L810 714')"/>
+              <circle class="xos-tip" r="26" style="--xd:.28s;offset-path:path('M810 -26L-46 714')"/>
+              <circle class="xos-tip" r="26" style="--xd:.45s;offset-path:path('M1308.4 49A381 295 0 1 1 1308.4 639A381 295 0 1 1 1308.4 49')"/>
+              <circle class="xos-tip" r="26" style="--xd:.7s;offset-path:path('M1962 639L2540 639L2662 500L2540 344L1962 344L2012 196L2110 49L2658 49')"/>
             </g>
           </svg>
         </div>
@@ -99,13 +105,13 @@
       <div class="ch__inner">
         <div class="system-diagram reveal">
           <svg class="play" viewBox="0 0 300 300" role="img" aria-label="Diagram of a quarterback and three receiver routes">
-            <g font-family="JetBrains Mono, monospace" font-size="18" fill="rgba(245,193,93,0.7)">
-              <text x="78" y="222">O</text><text x="108" y="222">O</text><text x="138" y="222">O</text><text x="168" y="222">O</text><text x="198" y="222">O</text>
-              <text x="132" y="250" fill="#fff6e0">QB</text>
+            <g font-family="JetBrains Mono, monospace" font-size="18" fill="rgba(245,193,93,0.7)" text-anchor="middle">
+              <text x="70" y="222">O</text><text x="110" y="222">O</text><text x="150" y="222">O</text><text x="190" y="222">O</text><text x="230" y="222">O</text>
+              <text x="150" y="250" fill="#fff6e0">QB</text>
             </g>
-            <path style="--d:.1s;filter:drop-shadow(0 0 5px rgba(245,193,93,0.9))" d="M 118 210 L 118 130 L 175 85" fill="none" stroke="#f5c15d" stroke-width="2"/>
-            <path style="--d:.35s;filter:drop-shadow(0 0 6px rgba(255,233,196,0.85))" d="M 208 210 L 208 120 L 265 120" fill="none" stroke="#ffe9c4" stroke-width="2"/>
-            <path style="--d:.6s;filter:drop-shadow(0 0 4px rgba(245,193,93,0.6))" d="M 88 210 L 88 150 L 40 110" fill="none" stroke="rgba(245,193,93,0.6)" stroke-width="1.5"/>
+            <path style="--d:.1s;filter:drop-shadow(0 0 5px rgba(245,193,93,0.9))" d="M 110 206 L 110 130 L 175 85" fill="none" stroke="#f5c15d" stroke-width="2"/>
+            <path style="--d:.35s;filter:drop-shadow(0 0 6px rgba(255,233,196,0.85))" d="M 230 206 L 230 120 L 265 120" fill="none" stroke="#ffe9c4" stroke-width="2"/>
+            <path style="--d:.6s;filter:drop-shadow(0 0 4px rgba(245,193,93,0.6))" d="M 70 206 L 70 150 L 40 110" fill="none" stroke="rgba(245,193,93,0.6)" stroke-width="1.5"/>
             <circle cx="175" cy="85" r="4" fill="#fff6e0"/>
             <circle cx="265" cy="120" r="4" fill="#ffe9c4"/>
             <circle cx="40" cy="110" r="4" fill="#f5c15d"/>
