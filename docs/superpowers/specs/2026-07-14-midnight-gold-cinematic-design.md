@@ -43,7 +43,7 @@ they fade through greys instead of blue.
 ## Type system
 
 - **Josefin Sans** — display, glow-treated (700, uppercase, 0.2em tracking).
-- **Inter** — body (add weight 300).
+- **Quicksand** — body (base weight 300, line-height 1.7).
 - **JetBrains Mono** (new) — labels/buttons/tags, tiny, uppercase,
   0.2–0.5em tracking.
 
