@@ -21,7 +21,10 @@ page's scroll/canvas behavior lives in `js/cinematic.js`.
 
 ## Design System — "Midnight Gold"
 
-Gold neon on deep navy, Tron-cinematic. Reference: Fort Energy
+Gold neon on black, Tron-cinematic. (The background ramp was originally deep
+navy; it is now neutral black — the three `--bg*` steps keep their luminance so
+the depth gradients still read, they just fade through greys instead of blue.)
+Reference: Fort Energy
 (https://mont-fort.com/fort-energy/) — full-screen scroll chapters, one idea
 per screen, glowing wireframe scenes on a grid, sparse floating text.
 
@@ -29,10 +32,10 @@ per screen, glowing wireframe scenes on a grid, sparse floating text.
 
 | Token | Value | Use |
 |---|---|---|
-| `--bg` | `#04070f` | base background |
-| `--bg-mid` | `#0a1222` | mid background |
-| `--bg-warm` | `#12203a` | warm background |
-| `--panel` | `rgba(18,32,58,0.45)` | glass panel fill |
+| `--bg` | `#000000` | base background |
+| `--bg-mid` | `#0c0c0e` | mid background |
+| `--bg-warm` | `#17171b` | warm background |
+| `--panel` | `rgba(28,28,32,0.45)` | glass panel fill |
 | `--hairline` | `rgba(245,193,93,0.22)` | 1px borders/dividers |
 | `--gold` | `#c9a24b` | primary accent |
 | `--hot` | `#f5c15d` | hot gold accent |

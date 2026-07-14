@@ -20,14 +20,18 @@ redesign:
 - **Tech constraint**: no frameworks, no build step (GitHub Pages). Vanilla
   JS + one canvas. All animation behind `prefers-reduced-motion` guards.
 
-## Palette — "Midnight Gold" (gold neon on deep navy)
+## Palette — "Midnight Gold" (gold neon on black)
+
+The background ramp was originally deep navy; it is now neutral black. The three
+`bg*` steps keep their relative luminance, so the depth gradients still read —
+they fade through greys instead of blue.
 
 | Token | Value |
 |---|---|
-| bg | `#04070f` |
-| bg-mid | `#0a1222` |
-| bg-warm | `#12203a` |
-| panel | `rgba(18,32,58,0.45)` |
+| bg | `#000000` |
+| bg-mid | `#0c0c0e` |
+| bg-warm | `#17171b` |
+| panel | `rgba(28,28,32,0.45)` |
 | hairline | `rgba(245,193,93,0.22)` |
 | gold | `#c9a24b` |
 | hot gold | `#f5c15d` |
@@ -109,7 +113,7 @@ arrival via `IntersectionObserver`.
 
 | Chapter | Content |
 |---|---|
-| CH0 Arrival | Night sky + CSS stars, stadium-silhouette horizon with glowing 1px horizon line, canvas rising gold light-beams behind the horizon, perspective grid floor below. Centered XOS wordmark (Anton, 0.42em tracking, white-hot glow) + "QUARTERBACK DEVELOPMENT" mono sub. Bottom-left "SCROLL DOWN TO DISCOVER" cue. Minimal fixed header (logo + round menu toggle, gold-on-navy). |
+| CH0 Arrival | Night sky + CSS stars, stadium-silhouette horizon with glowing 1px horizon line, canvas rising gold light-beams behind the horizon, perspective grid floor below. Centered XOS wordmark (Anton, 0.42em tracking, white-hot glow) + "QUARTERBACK DEVELOPMENT" mono sub. Bottom-left "SCROLL DOWN TO DISCOVER" cue. Minimal fixed header (logo + round menu toggle, gold-on-black). |
 | CH1 Statement | One huge Anton headline alone: "Developing QBs who win **Friday nights** and reach the next level." — "Friday nights" in hot gold. |
 | CH2 The System | Glowing SVG play diagram (O-line, QB, 3 route trees) that draws itself on scroll-arrival (`stroke-dashoffset` animation) on a faint grid background. Copy block floats right: 100+ NFL & college QBs coached. |
 | CH3 The Advantage | "The XOS Advantage" + three floating text columns (On-Field 1:1 / On-Field Group / Virtual Coaching) — no cards, no boxes. |
