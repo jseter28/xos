@@ -302,6 +302,10 @@ h1,h2,h3{font-family:var(--font-display);font-weight:700;letter-spacing:.2em;lin
 .xos-mark{
   width:clamp(16rem,72vw,46rem);height:auto;display:block;margin:0 auto;
   overflow:visible;
+  /* Gold bloom. A drop-shadow on the root <svg>, so it renders BEHIND the mark
+     and can never tint a letter's interior. A shadow, not a stroke — each
+     letter stays exactly one flat colour. */
+  filter:drop-shadow(0 0 22px rgba(245,193,93,.38)) drop-shadow(0 0 60px rgba(201,162,75,.28));
 }
 .xos-glyph{stroke:none}
 /* Mask strokes: white reveals the glyph beneath. stroke-width is set per-path
@@ -590,5 +594,9 @@ h1,h2,h3{font-family:var(--font-display);font-weight:700;letter-spacing:.2em;lin
   .saber{transform:scaleX(1) !important}
   .play path{stroke-dashoffset:0 !important}
   .play circle{opacity:1 !important}
-  .xos-mark path{stroke-dashoffset:0 !important;filter:none !important}
+  /* Wordmark: traces land fully drawn; tips never exist (display:none, not just
+     animation:none — a merely-stopped tip parks a hot dot on the finished mark).
+     No filter:none here: the bloom is a static glow, not motion, and must survive. */
+  .xos-mark .xos-trace{stroke-dashoffset:0 !important}
+  .xos-mark .xos-tip{display:none !important}
 }
