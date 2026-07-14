@@ -2,6 +2,8 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
+> **Later change (font) — 2026-07-14:** this plan was executed with Archivo Black, then the mark was reworked to **Bruno Ace** (wide, geometric, broken-joint; white X/O + gold S) with the reveal skeletons re-cut for the new shapes. The saber-trace architecture is unchanged; the font references below are the original build record.
+
 **Goal:** Replace the hero's three-layer neon-tube XOS with solid Archivo Black letterforms that are revealed by an animated saber-trace mask, preserving the existing ignition motion.
 
 **Architecture:** The saber becomes the reveal *mask*, not the letter. Three static filled glyph paths (Archivo Black outlines, embedded — no webfont) sit under three **per-glyph** SVG masks. Each mask holds a thick white stroke tracing that glyph's centerline, animated with the existing `stroke-dashoffset: 1 → 0` draw-on. As the stroke draws, it uncovers the solid letter behind it. A white-hot tip rides the leading edge of each trace. A gold `drop-shadow` bloom sits behind the whole mark.

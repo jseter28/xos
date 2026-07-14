@@ -113,7 +113,7 @@ arrival via `IntersectionObserver`.
 
 | Chapter | Content |
 |---|---|
-| CH0 Arrival | Night sky + CSS stars, stadium-silhouette horizon with glowing 1px horizon line, canvas rising gold light-beams behind the horizon, perspective grid floor below. Centered XOS wordmark (Anton, 0.42em tracking, white-hot glow) + "QUARTERBACK DEVELOPMENT" mono sub. Bottom-left "SCROLL DOWN TO DISCOVER" cue. Minimal fixed header (logo + round menu toggle, gold-on-black). |
+| CH0 Arrival | Night sky + CSS stars, stadium-silhouette horizon with glowing 1px horizon line, canvas rising gold light-beams behind the horizon, perspective grid floor below. Centered XOS wordmark (embedded Bruno Ace outlines, white X/O + gold S, saber-trace reveal with a gold bloom) + "QUARTERBACK DEVELOPMENT" mono sub. Bottom-left "SCROLL DOWN TO DISCOVER" cue. Minimal fixed header (logo + round menu toggle, gold-on-black). |
 | CH1 Statement | One huge Anton headline alone: "Developing QBs who win **Friday nights** and reach the next level." — "Friday nights" in hot gold. |
 | CH2 The System | Glowing SVG play diagram (O-line, QB, 3 route trees) that draws itself on scroll-arrival (`stroke-dashoffset` animation) on a faint grid background. Copy block floats right: 100+ NFL & college QBs coached. |
 | CH3 The Advantage | "The XOS Advantage" + three floating text columns (On-Field 1:1 / On-Field Group / Virtual Coaching) — no cards, no boxes. |

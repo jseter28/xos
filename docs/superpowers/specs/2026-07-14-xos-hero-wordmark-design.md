@@ -4,6 +4,14 @@
 **Status:** Approved design, pending implementation plan
 **Scope:** `index.html` (hero `.xos-mark` SVG), `css/styles.css` (`.xos-mark` block)
 
+> **Superseded (font) — 2026-07-14:** the saber-trace mask architecture below is
+> current, but the letterforms are no longer Archivo Black. The mark now uses
+> **Bruno Ace** — a wide, geometric, broken-joint face embedded as SVG outlines
+> — with the X and O filled white and the S gold. The per-glyph reveal skeletons
+> were re-cut for Bruno Ace's shapes (X diagonals, O ring, S bar-to-bar spine).
+> References to "Archivo Black" and its geometry below are the record of the
+> original approved design; read them as such.
+
 ## Problem
 
 The hero wordmark in chapter 0 (`ch--arrival`) is built as a three-layer stroked

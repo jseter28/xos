@@ -53,6 +53,9 @@ per screen, glowing wireframe scenes on a grid, sparse floating text.
   Tops out at 700 — never specify 800.
 - **JetBrains Mono** — labels, buttons, tags: small, uppercase, 0.2–0.5em
   letter-tracking.
+- **Bruno Ace** — the hero XOS wordmark **only**, embedded as SVG outline paths
+  (no webfont request). A wide, geometric, broken-joint face; the X and O render
+  white (`--white`), the S gold. Not part of the live-text type system above.
 
 Display sizes are tuned for Josefin's wide, airy metrics at 0.2em tracking.
 If you swap the display face, re-check every `clamp()` on a display element —
