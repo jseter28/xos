@@ -3,13 +3,300 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Training Programs — XOS Coaching</title>
+  <title>What We Do — XOS Coaching</title>
   <meta name="description" content="XOS Coaching offers on-field, virtual, and video submission training for quarterbacks at all levels.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;600;700&family=Quicksand:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css?v=20260715">
   <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+  <style>
+  /* ============================================================
+     WHAT WE DO — "QB HUD" cockpit layout (page-scoped)
+     ============================================================ */
+  :root{
+    --edge:1px solid var(--hairline);
+    --halo:0 0 6px rgba(var(--neon),.55), 0 0 18px rgba(var(--neon-deep),.35);
+  }
+  body{
+    overflow-x:hidden;
+    background-image:
+      linear-gradient(rgba(245,193,93,.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(245,193,93,.05) 1px, transparent 1px);
+    background-size:64px 64px;
+    background-position:center top;
+  }
+  /* faint vignette so the grid fades at the edges */
+  body::after{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+    background:radial-gradient(ellipse 120% 90% at 50% 42%, transparent 40%, rgba(0,0,0,.72) 100%);
+  }
+  /* keep the real site chrome above the fixed HUD overlay */
+  .site-header{z-index:60;}
+  .site-footer{position:relative;z-index:20;}
+
+  .wrap{position:relative;z-index:2;}
+
+  /* ============ FIXED HUD FRAME (sits above content, below chrome) ============ */
+  .hud-frame{position:fixed;inset:0;pointer-events:none;z-index:5;}
+  .hud-corner{position:absolute;width:74px;height:74px;pointer-events:none;}
+  .hud-corner.bl{bottom:18px;left:18px;border-bottom:var(--edge);border-left:var(--edge);}
+  .hud-corner.br{bottom:18px;right:18px;border-bottom:var(--edge);border-right:var(--edge);}
+  .hud-corner::after{content:"";position:absolute;width:7px;height:7px;background:var(--hot);box-shadow:var(--halo);}
+  .hud-corner.bl::after{bottom:-4px;left:-4px}
+  .hud-corner.br::after{bottom:-4px;right:-4px}
+
+  .hud-read{
+    position:fixed;z-index:6;pointer-events:none;
+    font-family:var(--font-mono);font-size:.6rem;letter-spacing:.34em;
+    text-transform:uppercase;color:var(--muted);line-height:1.9;
+  }
+  .hud-read .on{color:var(--hot);text-shadow:var(--halo)}
+  .hud-read.r-tl{top:84px;left:40px}
+  .hud-read.r-tr{top:84px;right:40px;text-align:right}
+  .hud-read.r-bl{bottom:30px;left:40px}
+  .hud-read.r-br{bottom:30px;right:40px;text-align:right}
+  .blip{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--hot);box-shadow:var(--halo);margin-right:.4em;vertical-align:middle;animation:pulse 2.4s ease-in-out infinite;}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+
+  /* center targeting bracket — sits in the hero and scrolls away (not pinned) */
+  .hud-cross{
+    position:absolute;top:82px;left:50%;transform:translateX(-50%);z-index:6;
+    font-family:var(--font-mono);font-size:.58rem;letter-spacing:.42em;color:var(--gold);
+    text-transform:uppercase;text-align:center;pointer-events:none;
+  }
+  .hud-cross .tick{display:block;width:1px;height:16px;margin:6px auto 0;background:linear-gradient(var(--core),transparent);box-shadow:var(--halo)}
+
+  /* ============ HERO / RETICLE CORE ============ */
+  .stage{
+    position:relative;min-height:100vh;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;text-align:center;
+    padding:9rem 1.25rem 5rem;
+  }
+  .eyebrow{
+    font-family:var(--font-mono);font-size:.66rem;letter-spacing:.46em;
+    text-transform:uppercase;color:var(--gold);margin-bottom:1.1rem;
+  }
+  .stage h1{
+    font-size:clamp(2.6rem,8vw,5.4rem);color:var(--head);
+    text-shadow:var(--glow-text);margin-bottom:1.1rem;
+  }
+  .intro{max-width:40rem;color:var(--muted);font-weight:300;font-size:1.02rem;margin:0 auto;}
+
+  /* ============ RADIAL SYSTEMS RIG ============ */
+  .rig{
+    position:relative;width:min(94vw,860px);height:min(94vw,860px);max-height:86vh;
+    margin:1.5rem auto 0;
+  }
+  /* central core */
+  .core{
+    position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+    width:210px;height:210px;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;text-align:center;border-radius:50%;
+    z-index:6;
+  }
+  .core .ring{
+    position:absolute;inset:0;border-radius:50%;border:1px solid rgba(245,193,93,.4);
+    box-shadow:0 0 34px rgba(245,193,93,.22), inset 0 0 30px rgba(245,193,93,.14);
+  }
+  .core .ring.r2{inset:-26px;border-color:rgba(245,193,93,.16);box-shadow:none;
+    animation:spin 26s linear infinite;border-style:dashed;}
+  .core .ring.r3{inset:24px;border-color:rgba(245,193,93,.28);box-shadow:inset 0 0 22px rgba(245,193,93,.2);}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .core .reticle-line{position:absolute;background:rgba(245,193,93,.35);}
+  .core .reticle-line.h{top:50%;left:8%;right:8%;height:1px;transform:translateY(-.5px)}
+  .core .reticle-line.v{left:50%;top:8%;bottom:8%;width:1px;transform:translateX(-.5px)}
+  .core .k{font-family:var(--font-mono);font-size:.56rem;letter-spacing:.4em;color:var(--gold);position:relative;z-index:2}
+  .core .xos{
+    font-family:var(--font-display);font-weight:700;letter-spacing:.14em;
+    font-size:2.5rem;color:var(--core);text-shadow:0 0 18px rgba(245,193,93,.7),0 0 40px rgba(201,162,75,.5);
+    position:relative;z-index:2;line-height:1;margin:.15rem 0;
+  }
+  .core .sub{font-family:var(--font-mono);font-size:.5rem;letter-spacing:.34em;color:var(--muted);position:relative;z-index:2}
+  .core-pulse{position:absolute;inset:0;border-radius:50%;border:1px solid rgba(245,193,93,.5);animation:corepulse 3.4s ease-out infinite;}
+  @keyframes corepulse{0%{transform:scale(.6);opacity:.7}100%{transform:scale(1.9);opacity:0}}
+
+  /* filament SVG overlay */
+  .filaments{position:absolute;inset:0;width:100%;height:100%;z-index:2;overflow:visible;}
+  .filaments path{
+    fill:none;stroke:rgba(245,193,93,.5);stroke-width:1;
+    filter:drop-shadow(0 0 3px rgba(245,193,93,.6));
+    stroke-dasharray:var(--len);stroke-dashoffset:var(--len);
+    transition:stroke-dashoffset .9s ease;
+  }
+  .filaments path.live{stroke-dashoffset:0;}
+  /* travelling data pips — continuous stream into the core */
+  .filaments circle.pip{fill:var(--core);filter:drop-shadow(0 0 5px rgba(245,193,93,.95));opacity:0;}
+
+  /* system node */
+  .system{
+    position:absolute;width:min(38vw,224px);z-index:5;
+    transform:translate(-50%,-50%);opacity:.15;transition:opacity .6s ease;
+  }
+  .system.online{opacity:1;}
+  .sys-badge{
+    display:inline-flex;align-items:center;gap:.5em;
+    font-family:var(--font-mono);font-size:.56rem;letter-spacing:.28em;text-transform:uppercase;
+    color:var(--muted);margin-bottom:.5rem;
+  }
+  .sys-badge .dot{width:7px;height:7px;border-radius:50%;background:var(--muted);transition:.4s;}
+  .system.online .sys-badge .dot{background:var(--hot);box-shadow:var(--halo);}
+  .sys-badge .st{transition:.3s}
+  .system.online .sys-badge .st{color:var(--hot)}
+  .sys-num{font-family:var(--font-mono);font-size:.54rem;letter-spacing:.3em;color:var(--gold);}
+  .system h3{
+    font-family:var(--font-display);font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+    font-size:.98rem;color:var(--head);line-height:1.25;margin:.15rem 0 .4rem;
+  }
+  .system.online h3{text-shadow:var(--halo)}
+  .system p{font-size:.78rem;color:var(--muted);font-weight:300;line-height:1.6;}
+  /* node anchor dot */
+  .sys-anchor{
+    position:absolute;top:-14px;width:10px;height:10px;border:1px solid var(--gold);
+    background:var(--bg);border-radius:50%;transition:.4s;
+  }
+  .system.online .sys-anchor{background:var(--hot);box-shadow:var(--halo);}
+  /* left column systems align right, brackets flip */
+  .system.left{text-align:right;}
+  .system.left .sys-badge{flex-direction:row-reverse;}
+  .system.left .sys-anchor{right:-16px;left:auto;top:6px;}
+  .system.right .sys-anchor{left:-16px;top:6px;}
+
+  /* ============ SECTIONS (instrumentation, no cards) ============ */
+  .panel{position:relative;z-index:2;max-width:960px;margin:0 auto;padding:5.5rem 1.5rem;}
+  .sec-label{
+    font-family:var(--font-mono);font-size:.64rem;letter-spacing:.42em;text-transform:uppercase;
+    color:var(--gold);text-align:center;margin-bottom:.6rem;
+  }
+  .sec-title{
+    font-family:var(--font-display);font-weight:700;letter-spacing:.2em;text-transform:uppercase;
+    font-size:clamp(1.5rem,4vw,2.4rem);color:var(--head);text-align:center;text-shadow:var(--glow-text);
+    margin-bottom:.5rem;
+  }
+  .sec-sub{text-align:center;color:var(--muted);font-weight:300;max-width:38rem;margin:0 auto 3rem;}
+
+  /* LAUNCH SEQUENCE bar */
+  .launch{max-width:820px;margin:0 auto;}
+  .track{position:relative;height:2px;background:rgba(245,193,93,.16);margin:2.6rem 0 2.2rem;overflow:visible;}
+  .track .fill{position:absolute;top:0;left:0;height:100%;width:0;
+    background:linear-gradient(90deg,var(--gold),var(--core));
+    box-shadow:0 0 10px rgba(245,193,93,.7);transition:width 1.6s cubic-bezier(.4,0,.1,1);}
+  /* looping comet pulse that sweeps the timeline once it's armed */
+  .track .comet{position:absolute;top:50%;left:0;width:60px;height:2px;
+    transform:translate(-100%,-50%);pointer-events:none;opacity:0;
+    background:linear-gradient(90deg,transparent,var(--core));
+    box-shadow:0 0 14px 2px rgba(245,193,93,.85);}
+  .track.armed .comet{animation:comet 2.8s linear infinite .6s;}
+  @keyframes comet{0%{left:0;opacity:0}6%{opacity:1}94%{opacity:1}100%{left:100%;opacity:0}}
+  /* lit stage-nodes breathe */
+  .stop.lit .node{animation:nodethrob 2.4s ease-in-out infinite;}
+  @keyframes nodethrob{0%,100%{box-shadow:var(--halo)}50%{box-shadow:0 0 15px 3px rgba(245,193,93,.75)}}
+  .stops{display:flex;justify-content:space-between;position:absolute;inset:0;top:-9px;}
+  .stop{position:relative;width:0;}
+  .stop .node{position:absolute;left:-10px;width:20px;height:20px;border-radius:50%;
+    border:1px solid var(--hairline);background:var(--bg);display:flex;align-items:center;justify-content:center;
+    font-family:var(--font-mono);font-size:.56rem;color:var(--muted);transition:.4s;}
+  .stop.lit .node{border-color:var(--hot);color:var(--core);box-shadow:var(--halo);background:#141310;}
+  .steps{display:flex;justify-content:space-between;gap:1rem;text-align:center;}
+  .step{flex:1;opacity:.35;transition:.5s;}
+  .step.lit{opacity:1;}
+  .step .en{font-family:var(--font-mono);font-size:.56rem;letter-spacing:.28em;color:var(--gold);}
+  .step h4{font-family:var(--font-display);font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+    font-size:.92rem;color:var(--head);margin:.35rem 0;}
+  .step.lit h4{text-shadow:var(--halo)}
+  .step p{font-size:.72rem;color:var(--muted);font-weight:300;line-height:1.5;}
+
+  /* READOUT ROW (who / pricing) */
+  .readouts{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;max-width:820px;margin:0 auto;}
+  .readout{position:relative;padding:1.8rem 1.6rem;border-top:var(--edge);border-bottom:var(--edge);}
+  .readout::before,.readout::after{content:"";position:absolute;width:9px;height:9px;}
+  .readout::before{top:-1px;left:-1px;border-top:1px solid var(--hot);border-left:1px solid var(--hot);}
+  .readout::after{bottom:-1px;right:-1px;border-bottom:1px solid var(--hot);border-right:1px solid var(--hot);}
+  .readout .rk{font-family:var(--font-mono);font-size:.58rem;letter-spacing:.34em;text-transform:uppercase;color:var(--gold);margin-bottom:.7rem;}
+  .readout .rv{color:var(--text);font-weight:300;line-height:1.6;font-size:.95rem;}
+  .readout .rv b{color:var(--core);font-weight:500;}
+
+  /* FINAL CTA */
+  .cta{text-align:center;position:relative;z-index:2;padding:6rem 1.5rem 8rem;}
+  .cta .reticle{
+    width:64px;height:64px;margin:0 auto 1.6rem;position:relative;border-radius:50%;
+    border:1px solid rgba(245,193,93,.4);box-shadow:0 0 24px rgba(245,193,93,.25),inset 0 0 18px rgba(245,193,93,.16);
+  }
+  .cta .reticle::before,.cta .reticle::after{content:"";position:absolute;background:rgba(245,193,93,.5);}
+  .cta .reticle::before{top:50%;left:14%;right:14%;height:1px}
+  .cta .reticle::after{left:50%;top:14%;bottom:14%;width:1px}
+  .cta h2{font-family:var(--font-display);font-weight:700;letter-spacing:.2em;text-transform:uppercase;
+    font-size:clamp(1.8rem,5vw,3rem);color:var(--head);text-shadow:var(--glow-text);margin-bottom:1.8rem;}
+  .hud-btn{
+    display:inline-flex;align-items:center;gap:.6em;font-family:var(--font-mono);
+    font-size:.74rem;letter-spacing:.28em;text-transform:uppercase;color:var(--bg);
+    background:linear-gradient(180deg,var(--core),var(--hot));padding:1rem 2.2rem;
+    border:1px solid var(--hot);box-shadow:0 0 24px rgba(245,193,93,.5);
+    transition:.25s;font-weight:700;
+  }
+  .hud-btn:hover{box-shadow:0 0 40px rgba(245,193,93,.85);transform:translateY(-2px);color:var(--bg);}
+
+  /* ============ RESPONSIVE — stack the rig into a wired column ============ */
+  @media (max-width:760px){
+    /* Fixed corner telemetry + center cross float over the headline, the
+       Launch Sequence heading and the CTA on a narrow viewport (they can't
+       clear centered full-width content), and r-tr clips off the right edge.
+       Hide the floating readout text on phone; keep the corner brackets so
+       the cockpit frame survives. */
+    .hud-read{display:none!important;}
+    .hud-cross{display:none!important;}
+
+    /* tighter vertical rhythm — the desktop paddings are oversized on phone */
+    .stage{padding:6.5rem 1.25rem 3.5rem;}
+    .panel{padding:4rem 1.25rem;}
+    .cta{padding:4rem 1.25rem 5rem;}
+    .sec-sub{margin-bottom:2.25rem;}
+
+    .rig{height:auto;max-height:none;display:flex;flex-direction:column;gap:0;padding-left:26px;
+      border-left:none;}
+    .filaments{display:none;}
+    .core-pulse{display:none;}
+    .core{position:relative;top:auto;left:auto;transform:none;width:100%;height:auto;
+      padding:1.4rem 0;margin-bottom:.5rem;}
+    .core .ring,.core .reticle-line{display:none;}
+    .core .xos{font-size:2rem}
+    .system{position:relative;top:auto!important;left:auto!important;transform:none;width:100%;
+      text-align:left!important;padding:1.4rem 0 1.4rem 1.6rem;max-width:none;}
+    .system.left .sys-badge{flex-direction:row;}
+    .sys-anchor{left:-30px!important;right:auto!important;top:1.9rem!important;}
+    .system.left .sys-anchor{right:auto!important;}
+    .readouts{grid-template-columns:1fr;}
+    .steps{flex-direction:column;gap:1.4rem;text-align:left;}
+    .track{margin:2rem 0;}
+    .spine-v{position:absolute;left:26px;top:150px;bottom:80px;width:1px;
+      background:linear-gradient(var(--gold),rgba(245,193,93,.12));box-shadow:var(--halo);z-index:1;}
+  }
+
+  /* ============ NARROW PHONES — tighten type + spacing ============ */
+  @media (max-width:480px){
+    .stage{padding:6rem 1rem 3rem;}
+    .stage h1{font-size:clamp(1.9rem,8vw,2.4rem);}
+    .intro{font-size:.95rem;}
+    .panel{padding:3.25rem 1rem;}
+    .cta{padding:3.5rem 1rem 4.5rem;}
+    .core .xos{font-size:1.8rem;}
+    .system{padding-left:1.3rem;}
+    .system h3{font-size:.92rem;}
+    .readout{padding:1.5rem 1.3rem;}
+    .step h4{font-size:.88rem;}
+  }
+
+  /* ============ REDUCED MOTION — everything ON, static ============ */
+  @media (prefers-reduced-motion:reduce){
+    .stage *,.panel *,.cta *,.hud-frame *,.hud-read *,.hud-cross *{animation:none!important;transition:none!important;}
+    .system{opacity:1!important;}
+    .filaments path{stroke-dashoffset:0!important;}
+    .filaments circle.pip{opacity:1!important;}
+    .step,.stop{opacity:1!important;}
+    .track .fill{width:100%!important;}
+    .blip{opacity:1!important;}
+  }
+  </style>
 </head>
 <body>
   <header class="site-header">
@@ -19,43 +306,148 @@
     </button>
   </header>
 
-  <main>
-    <section class="page-banner"><div class="container"><p class="label">XOS Coaching</p><h1>What We Do</h1></div></section>
+  <!-- ===== FIXED HUD FRAME ===== -->
+  <div class="hud-frame" aria-hidden="true">
+    <span class="hud-corner bl"></span>
+    <span class="hud-corner br"></span>
+  </div>
 
-    <section class="section container" style="text-align:center">
-      <p style="max-width:34rem;margin:0 auto;color:var(--muted)">How XOS develops quarterbacks — mechanics, mind, and recruiting — at every level.</p>
-    </section>
+  <div class="hud-read r-tl" aria-hidden="true">
+    <span class="on"><span class="blip"></span>Ready</span><br>
+    XOS · Flight Systems<br>
+    Alt 00.000 · Hdg 090
+  </div>
+  <div class="hud-read r-tr" aria-hidden="true">
+    <span id="lockRead">Sys <span class="on" id="onlineCount">00</span>/04 · Booting</span><br>
+    Reticle · Locked<br>
+    Signal · Strong
+  </div>
+  <div class="hud-read r-bl" aria-hidden="true">
+    Launch Bay · Armed<br>
+    Fuel 100% · Nom<br>
+    Ver 2.1 · HUD Mk IV
+  </div>
+  <div class="hud-read r-br" aria-hidden="true">
+    What We Do<br>
+    Systems Overview<br>
+    <span class="on">Scroll &darr;</span>
+  </div>
+  <div class="hud-cross" aria-hidden="true">
+    + Target Lock +
+    <span class="tick"></span>
+  </div>
 
-    <section class="section" style="background:var(--bg)"><div class="container" style="display:flex;flex-direction:column;gap:1rem">
-      <div class="card" style="border-top:0;border-left:3px solid var(--gold)"><h3 style="font-size:1.1rem">On-Field Coaching (1:1)</h3><p style="color:var(--muted)">Private sessions built around the athlete — footwork, throwing motion, reads.</p></div>
-      <div class="card" style="border-top:0;border-left:3px solid var(--gold)"><h3 style="font-size:1.1rem">On-Field Coaching (Group)</h3><p style="color:var(--muted)">Competitive reps with other QBs; camps and clinics.</p></div>
-      <div class="card" style="border-top:0;border-left:3px solid var(--gold)"><h3 style="font-size:1.1rem">Virtual Coaching</h3><p style="color:var(--muted)">Remote development and check-ins — train from anywhere.</p></div>
-      <div class="card" style="border-top:0;border-left:3px solid var(--gold)"><h3 style="font-size:1.1rem">Video Submission</h3><p style="color:var(--muted)">Send film; get detailed breakdown and a plan.</p></div>
-    </div></section>
+  <main class="wrap">
 
-    <section class="slash"><div class="container">
-      <h2 style="text-align:center;font-size:1.4rem;margin-bottom:1.25rem">How It Works</h2>
-      <div class="stats">
-        <div><div class="n">1</div><div class="label">Reach Out</div></div>
-        <div><div class="n">2</div><div class="label">Assessment</div></div>
-        <div><div class="n">3</div><div class="label">Train</div></div>
-        <div><div class="n">4</div><div class="label">Compete</div></div>
+    <!-- ===== HERO / RADIAL RIG ===== -->
+    <section class="stage">
+      <p class="eyebrow">XOS Coaching · System Online</p>
+      <h1 class="glow-text">What We Do</h1>
+      <p class="intro">How XOS develops quarterbacks — mechanics, mind, and recruiting — at every level.</p>
+
+      <div class="rig" id="rig">
+        <span class="spine-v" aria-hidden="true"></span>
+
+        <!-- filaments core→node, drawn by JS to match node positions -->
+        <svg class="filaments" id="filaments" viewBox="0 0 860 860" preserveAspectRatio="none" aria-hidden="true"></svg>
+
+        <!-- CENTRAL CORE -->
+        <div class="core">
+          <span class="core-pulse"></span>
+          <span class="ring r2"></span>
+          <span class="ring"></span>
+          <span class="ring r3"></span>
+          <span class="reticle-line h"></span>
+          <span class="reticle-line v"></span>
+          <span class="k">Core</span>
+          <span class="xos">XOS</span>
+          <span class="sub">QB Systems</span>
+        </div>
+
+        <!-- SYSTEM NODES (positioned absolutely on wide; JS sets filaments) -->
+        <div class="system left"  data-sys="1" style="top:20%;left:19%;">
+          <span class="sys-anchor"></span>
+          <span class="sys-badge"><span class="dot"></span><span class="st">Standby</span></span>
+          <span class="sys-num">SYS 01</span>
+          <h3>On-Field Coaching · 1:1</h3>
+          <p>Private sessions built around the athlete — footwork, throwing motion, reads.</p>
+        </div>
+
+        <div class="system right" data-sys="2" style="top:20%;left:81%;">
+          <span class="sys-anchor"></span>
+          <span class="sys-badge"><span class="dot"></span><span class="st">Standby</span></span>
+          <span class="sys-num">SYS 02</span>
+          <h3>On-Field Coaching · Group</h3>
+          <p>Competitive reps with other QBs — camps and clinics.</p>
+        </div>
+
+        <div class="system left"  data-sys="3" style="top:80%;left:19%;">
+          <span class="sys-anchor"></span>
+          <span class="sys-badge"><span class="dot"></span><span class="st">Standby</span></span>
+          <span class="sys-num">SYS 03</span>
+          <h3>Virtual Coaching</h3>
+          <p>Remote development and check-ins — train from anywhere.</p>
+        </div>
+
+        <div class="system right" data-sys="4" style="top:80%;left:81%;">
+          <span class="sys-anchor"></span>
+          <span class="sys-badge"><span class="dot"></span><span class="st">Standby</span></span>
+          <span class="sys-num">SYS 04</span>
+          <h3>Video Submission</h3>
+          <p>Send film; get a detailed breakdown and a plan.</p>
+        </div>
       </div>
-    </div></section>
-
-    <section class="section container" style="text-align:center">
-      <p class="label">Who It's For</p>
-      <p style="color:var(--muted);margin-top:.5rem">Youth · Middle School · High School · College QBs — all skill levels welcome.</p>
     </section>
 
-    <section class="section" style="background:var(--bg);text-align:center"><div class="container">
-      <p style="color:var(--muted)">Packages tailored to each athlete. <span style="color:var(--gold);font-weight:700">Contact us for pricing.</span></p>
-    </div></section>
+    <!-- ===== LAUNCH SEQUENCE / PROCESS ===== -->
+    <section class="panel launch" id="launch">
+      <p class="sec-label">How It Works</p>
+      <h2 class="sec-title">Launch Sequence</h2>
+      <p class="sec-sub">Four stages from first contact to game day. Ignition on approach.</p>
 
-    <section class="section" style="background:var(--bg);text-align:center"><div class="container">
-      <h2 class="glow-text" style="font-size:2rem">Start Your Development</h2>
-      <a class="btn btn-gold" href="contact.html" style="margin-top:1rem">BOOK TRAINING →</a>
-    </div></section>
+      <div class="track" id="launchTrack">
+        <div class="fill" id="launchFill"></div>
+        <span class="comet" aria-hidden="true"></span>
+        <div class="stops">
+          <span class="stop" data-step="1"><span class="node">01</span></span>
+          <span class="stop" data-step="2"><span class="node">02</span></span>
+          <span class="stop" data-step="3"><span class="node">03</span></span>
+          <span class="stop" data-step="4"><span class="node">04</span></span>
+        </div>
+      </div>
+
+      <div class="steps">
+        <div class="step" data-step="1"><span class="en">Stage 01</span><h4>Reach Out</h4><p>Make contact and tell us about the athlete.</p></div>
+        <div class="step" data-step="2"><span class="en">Stage 02</span><h4>Assessment</h4><p>Evaluate mechanics, reads, and goals.</p></div>
+        <div class="step" data-step="3"><span class="en">Stage 03</span><h4>Train</h4><p>Build the plan and put in the reps.</p></div>
+        <div class="step" data-step="4"><span class="en">Stage 04</span><h4>Compete</h4><p>Take it to the field and perform.</p></div>
+      </div>
+    </section>
+
+    <!-- ===== READOUTS: WHO / PRICING ===== -->
+    <section class="panel">
+      <p class="sec-label">Field Parameters</p>
+      <h2 class="sec-title">Who It's For</h2>
+      <div class="readouts">
+        <div class="readout">
+          <p class="rk">Target Profile</p>
+          <p class="rv"><b>Youth · Middle School · High School · College QBs</b> — all skill levels welcome.</p>
+        </div>
+        <div class="readout">
+          <p class="rk">Pricing · Config</p>
+          <p class="rv">Packages <b>tailored to each athlete.</b> Contact us for pricing.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== FINAL CTA ===== -->
+    <section class="cta">
+      <div class="reticle"></div>
+      <p class="sec-label">Clear For Launch</p>
+      <h2>Start Your Development</h2>
+      <a class="hud-btn" href="contact.html">Book Training &rarr;</a>
+    </section>
+
   </main>
 
   <div class="site-menu" id="site-menu" role="dialog" aria-modal="true" aria-label="Site menu">
@@ -100,5 +492,148 @@
   </footer>
 
   <script src="js/main.js?v=20260715"></script>
+  <script>
+  (function(){
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    /* ---- build filaments from node positions to core ---- */
+    var rig = document.getElementById('rig');
+    var svg = document.getElementById('filaments');
+    var VB = 860; // viewBox units
+    var systems = Array.prototype.slice.call(document.querySelectorAll('.system'));
+
+    var PIPS_PER_LINE = 3;        // how many pips stream down each filament
+    var STREAM_PERIOD = 1500;     // ms for one pip to travel node -> core
+    var livePaths = [];           // paths currently streaming
+
+    function buildFilaments(){
+      livePaths = [];
+      if(window.innerWidth <= 760){ svg.innerHTML=''; return; }
+      svg.innerHTML='';
+      var ns='http://www.w3.org/2000/svg';
+      var cx=VB/2, cy=VB/2;
+      systems.forEach(function(sys){
+        // node anchor point in viewBox space, from its top/left %
+        var lx = parseFloat(sys.style.left)/100*VB;
+        var ly = parseFloat(sys.style.top)/100*VB;
+        // curve control toward core for an organic wired look
+        var mx = (lx+cx)/2, my=(ly+cy)/2 + (ly<cy? -40:40);
+        var d = 'M'+lx+' '+ly+' Q'+mx+' '+my+' '+cx+' '+cy;
+        var path=document.createElementNS(ns,'path');
+        path.setAttribute('d',d);
+        path.setAttribute('data-sys',sys.getAttribute('data-sys'));
+        svg.appendChild(path);
+        var len=path.getTotalLength();
+        path.style.setProperty('--len',len);
+        path._len=len;
+        if(reduce){ path.classList.add('live'); }
+        // if this system already powered on (e.g. after a resize rebuild), resume its stream
+        if(sys.classList.contains('online') && !reduce){ path.classList.add('live'); livePaths.push(path); }
+        // a small fleet of pips, phase-staggered, that continuously feed the core
+        var pips=[];
+        for(var i=0;i<PIPS_PER_LINE;i++){
+          var pip=document.createElementNS(ns,'circle');
+          pip.setAttribute('r','2.6'); pip.setAttribute('class','pip');
+          svg.appendChild(pip);
+          var phase=i/PIPS_PER_LINE;
+          pips.push({el:pip,phase:phase});
+          if(reduce){ // static: park pips spread along the wire
+            var pt=path.getPointAtLength(len*phase);
+            pip.setAttribute('cx',pt.x); pip.setAttribute('cy',pt.y);
+            pip.style.opacity=1;
+          }
+        }
+        path._pips=pips;
+      });
+    }
+
+    /* continuous stream: pips ride node -> core on every live filament */
+    var streamStart=null;
+    function streamFrame(ts){
+      if(streamStart===null) streamStart=ts;
+      var elapsed=ts-streamStart;
+      for(var p=0;p<livePaths.length;p++){
+        var path=livePaths[p], len=path._len, pips=path._pips;
+        if(!len||!pips) continue;
+        for(var j=0;j<pips.length;j++){
+          var t=((elapsed/STREAM_PERIOD)+pips[j].phase)%1;
+          var pt=path.getPointAtLength(len*t);
+          var el=pips[j].el;
+          el.setAttribute('cx',pt.x); el.setAttribute('cy',pt.y);
+          // fade in leaving the node, brighten arriving at the core
+          var op = t<.10 ? t/.10 : (t>.94 ? (1-t)/.06 : 1);
+          el.style.opacity = op<0?0:(op>1?1:op);
+          el.setAttribute('r', (2.2 + t*1.8).toFixed(2)); // swells into the core
+        }
+      }
+      requestAnimationFrame(streamFrame);
+    }
+    buildFilaments();
+    if(!reduce) requestAnimationFrame(streamFrame);
+    var rt; window.addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(buildFilaments,180);});
+
+    var onlineCount=document.getElementById('onlineCount');
+    var lockRead=document.getElementById('lockRead');
+    var count=0;
+
+    function powerOn(sys){
+      sys.classList.add('online');
+      var st=sys.querySelector('.st'); if(st) st.textContent='Online';
+      var idx=sys.getAttribute('data-sys');
+      var path=svg.querySelector('path[data-sys="'+idx+'"]');
+      if(path){ path.classList.add('live'); if(livePaths.indexOf(path)<0) livePaths.push(path); }
+      count++;
+      onlineCount.textContent = ('0'+count).slice(-2);
+      if(count>=4){ lockRead.innerHTML='Sys <span class="on">04</span>/04 · <span class="on">Lock</span>'; }
+    }
+
+    if(reduce){
+      // everything on, static
+      systems.forEach(function(s){s.classList.add('online');var st=s.querySelector('.st');if(st)st.textContent='Online';});
+      onlineCount.textContent='04';
+      lockRead.innerHTML='Sys <span class="on">04</span>/04 · <span class="on">Lock</span>';
+      document.querySelectorAll('.stop,.step').forEach(function(e){e.classList.add('lit');});
+    } else {
+      // ---- power on systems in sequence when rig enters view ----
+      var fired=false;
+      var rigObs=new IntersectionObserver(function(entries){
+        entries.forEach(function(e){
+          if(e.isIntersecting && !fired){
+            fired=true;
+            systems.forEach(function(sys,i){
+              setTimeout(function(){ powerOn(sys); }, 500 + i*650);
+            });
+          }
+        });
+      },{threshold:.35});
+      rigObs.observe(rig);
+
+      // ---- launch sequence bar ----
+      var launch=document.getElementById('launch');
+      var track=document.getElementById('launchTrack');
+      var fill=document.getElementById('launchFill');
+      var stops=Array.prototype.slice.call(document.querySelectorAll('.stop'));
+      var steps=Array.prototype.slice.call(document.querySelectorAll('.step'));
+      var launchFired=false;
+      var launchObs=new IntersectionObserver(function(entries){
+        entries.forEach(function(e){
+          if(e.isIntersecting && !launchFired){
+            launchFired=true;
+            fill.style.width='100%';
+            [0,1,2,3].forEach(function(i){
+              setTimeout(function(){
+                stops[i].classList.add('lit');
+                steps[i].classList.add('lit');
+              }, 300 + i*400);
+            });
+            // once the bar has filled, keep the sequence alive with a looping comet sweep
+            setTimeout(function(){ track.classList.add('armed'); }, 300 + 4*400);
+          }
+        });
+      },{threshold:.4});
+      launchObs.observe(launch);
+    }
+  })();
+  </script>
 </body>
 </html>
