@@ -135,33 +135,124 @@ h1,h2,h3{font-family:var(--font-display);font-weight:700;letter-spacing:.2em;lin
   transition:box-shadow .25s ease,color .2s ease;
 }
 .menu-toggle:hover{color:var(--core);box-shadow:0 0 26px rgba(var(--neon),.45)}
+.menu-toggle:focus-visible{outline:none;color:var(--core);box-shadow:0 0 26px rgba(var(--neon),.6)}
 .menu-toggle svg{width:20px;height:20px}
 
+/* ---- full-height right-side drawer ("cinematic dossier") ---- */
 .site-menu{
+  --menu-w:min(430px,88vw);
   position:fixed;inset:0;z-index:40;
-  background:var(--bg);
-  display:flex;flex-direction:column;justify-content:center;
-  padding:2rem 1.75rem;
-  transform:translateY(-100%);opacity:0;visibility:hidden;
-  transition:transform .4s ease,opacity .3s;
+  visibility:hidden;transition:visibility .45s ease;
 }
-.site-menu.open{transform:translateY(0);opacity:1;visibility:visible}
-.site-menu nav{display:flex;flex-direction:column;gap:.6rem}
-.site-menu nav a{
-  font-family:var(--font-display);font-size:1.4rem;text-transform:uppercase;
-  font-weight:700;letter-spacing:.2em;
-  color:var(--text);width:fit-content;transition:color .18s ease,text-shadow .18s ease;
+.site-menu.open{visibility:visible}
+
+/* backdrop — frost-dissolve layer (solid dim is the no-backdrop-filter fallback) */
+.menu-backdrop{
+  position:absolute;inset:0;background:rgba(0,0,0,.55);
+  opacity:0;transition:opacity .45s ease;
 }
-.site-menu nav a:hover,.site-menu nav a[aria-current="page"]{
-  color:var(--hot);text-shadow:var(--glow-text);
+.site-menu.open .menu-backdrop{opacity:1}
+
+/* panel — the drawer itself */
+.menu-panel{
+  position:absolute;top:0;right:0;height:100%;width:var(--menu-w);
+  padding:5rem 2.2rem 2rem;
+  display:flex;flex-direction:column;overflow:hidden;
+  background:linear-gradient(180deg,#070707,#0b0b0d 55%,#060606);
+  border-left:1px solid var(--hairline);
+  box-shadow:-30px 0 80px rgba(0,0,0,.6),inset 1px 0 0 rgba(var(--neon),.08);
+  opacity:0;transition:opacity .4s ease;
 }
-.site-menu .menu-close{position:absolute;top:1rem;right:1.25rem;font-size:1.1rem}
-.site-menu .menu-foot{
-  position:absolute;bottom:1.6rem;left:1.75rem;
-  font-family:var(--font-mono);font-size:.62rem;letter-spacing:.28em;
+.site-menu.open .menu-panel{opacity:1}
+
+/* saber edge that ignites down the panel's left border (outside the clipped
+   panel so it stays visible while the panel unsheathes) */
+.site-menu::after{
+  content:"";position:absolute;top:0;bottom:0;right:var(--menu-w);width:2px;
+  background:var(--core);
+  box-shadow:0 0 12px 2px rgba(var(--neon),.85),0 0 34px 6px rgba(var(--neon-deep),.5);
+  transform:scaleY(0);transform-origin:top;opacity:0;pointer-events:none;
+}
+
+.menu-close{position:absolute;top:1rem;right:1.1rem;font-size:1rem;z-index:5}
+
+.menu-eyebrow{
+  position:relative;z-index:1;
+  font-family:var(--font-mono);font-size:.6rem;letter-spacing:.42em;
   text-transform:uppercase;color:var(--muted);
 }
-@media (min-width:1024px){.site-menu nav a{font-size:2.1rem}}
+.menu-saber{position:relative;z-index:1;margin:.85rem 0 1.9rem;width:100%}
+
+.site-menu nav{display:flex;flex-direction:column;gap:1.1rem;position:relative;z-index:1}
+.site-menu nav a{
+  display:flex;align-items:baseline;gap:1rem;width:fit-content;position:relative;
+  padding-bottom:.25rem;color:var(--text);transition:color .18s ease;
+}
+.site-menu nav a .mnum{
+  font-family:var(--font-mono);font-size:.72rem;letter-spacing:.2em;
+  color:var(--gold);opacity:.75;min-width:1.6em;
+}
+.site-menu nav a .mlabel{
+  font-family:var(--font-display);font-weight:700;letter-spacing:.18em;
+  text-transform:uppercase;font-size:1.5rem;line-height:1;
+}
+.site-menu nav a::after{
+  content:"";position:absolute;left:2.6rem;right:100%;bottom:0;height:1px;
+  background:linear-gradient(90deg,var(--core),transparent);
+  box-shadow:0 0 8px 1px rgba(var(--neon),.6);
+  transition:right .32s cubic-bezier(.2,.8,.2,1);
+}
+.site-menu nav a:hover,.site-menu nav a:focus-visible{color:var(--hot);outline:none}
+.site-menu nav a:hover .mlabel,.site-menu nav a:focus-visible .mlabel{text-shadow:var(--glow-text)}
+.site-menu nav a:hover::after,.site-menu nav a:focus-visible::after{right:.5rem}
+.site-menu nav a[aria-current="page"]{color:var(--hot)}
+.site-menu nav a[aria-current="page"] .mlabel{text-shadow:var(--glow-text)}
+.site-menu nav a[aria-current="page"] .mnum{opacity:1;color:var(--hot)}
+
+.menu-foot{
+  position:relative;z-index:1;margin-top:auto;padding-top:2rem;
+  font-family:var(--font-mono);font-size:.58rem;letter-spacing:.28em;
+  text-transform:uppercase;color:var(--muted);
+}
+.menu-watermark{
+  position:absolute;right:-4%;top:32%;z-index:0;
+  font-family:var(--font-display);font-weight:700;font-size:11rem;line-height:1;
+  letter-spacing:.02em;color:transparent;
+  -webkit-text-stroke:1px rgba(var(--neon),.10);pointer-events:none;user-select:none;
+}
+.menu-grid{height:34%;opacity:.5;z-index:0}
+
+@media (min-width:1024px){.site-menu nav a .mlabel{font-size:1.9rem}}
+
+/* motion enhancement — reveal only when motion is allowed. The global
+   prefers-reduced-motion block kills animations, so the base state above
+   must be the fully-visible resting state; these rules add the reveal. */
+@media (prefers-reduced-motion: no-preference){
+  .menu-eyebrow,.site-menu nav a,.menu-foot{opacity:0;transform:translateY(16px)}
+  .site-menu.open .menu-backdrop{animation:menu-frost .6s ease both}
+  .site-menu.open .menu-panel{animation:menu-unsheath .62s cubic-bezier(.2,.8,.2,1) both}
+  .site-menu.open::after{animation:menu-saberedge .6s ease both}
+  .site-menu.open .menu-saber{animation:saber-ignite .5s .18s cubic-bezier(.2,.8,.2,1) both}
+  .site-menu.open .menu-eyebrow{animation:menu-content-in .5s .10s cubic-bezier(.2,.8,.2,1) both}
+  .site-menu.open nav a{animation:menu-content-in .5s cubic-bezier(.2,.8,.2,1) both}
+  .site-menu.open nav a:nth-of-type(1){animation-delay:.20s}
+  .site-menu.open nav a:nth-of-type(2){animation-delay:.27s}
+  .site-menu.open nav a:nth-of-type(3){animation-delay:.34s}
+  .site-menu.open nav a:nth-of-type(4){animation-delay:.41s}
+  .site-menu.open nav a:nth-of-type(5){animation-delay:.48s}
+  .site-menu.open .menu-foot{animation:menu-content-in .5s .55s cubic-bezier(.2,.8,.2,1) both}
+}
+@keyframes menu-frost{
+  from{opacity:0;-webkit-backdrop-filter:blur(0);backdrop-filter:blur(0)}
+  to{opacity:1;-webkit-backdrop-filter:blur(9px);backdrop-filter:blur(9px)}
+}
+@keyframes menu-unsheath{
+  0%{clip-path:inset(0 100% 0 0)}22%{clip-path:inset(0 100% 0 0)}100%{clip-path:inset(0 0 0 0)}
+}
+@keyframes menu-saberedge{
+  0%{transform:scaleY(0);opacity:1}42%{transform:scaleY(1);opacity:1}100%{transform:scaleY(1);opacity:0}
+}
+@keyframes menu-content-in{to{opacity:1;transform:none}}
 
 /* ============================================================
    REUSABLE FX UTILITIES

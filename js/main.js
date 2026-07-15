@@ -31,8 +31,10 @@ function initMenu(){
     if(releaseTrap){releaseTrap();releaseTrap=null;}
     toggle.focus();
   };
+  const backdrop=menu.querySelector(".menu-backdrop");
   toggle.addEventListener("click",open);
   if(close) close.addEventListener("click",shut);
+  if(backdrop) backdrop.addEventListener("click",shut);
   menu.querySelectorAll("nav a").forEach(a=>a.addEventListener("click",shut));
   document.addEventListener("keydown",e=>{if(e.key==="Escape") shut();});
 }

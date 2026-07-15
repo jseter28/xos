@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;600;700&family=Quicksand:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/styles.css?v=20260715">
   <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
 </head>
 <body>
@@ -58,14 +58,22 @@
   </main>
 
   <div class="site-menu" id="site-menu" role="dialog" aria-modal="true" aria-label="Site menu">
-    <button class="menu-toggle menu-close" aria-label="Close menu">✕</button>
-    <nav>
-      <a href="about.html" aria-current="page">Who We Are</a>
-      <a href="training.html">What We Do</a>
-      <a href="players.html">Players</a>
-      <a href="contact.html">Contact</a>
-    </nav>
-    <div class="menu-foot">KOLT &amp; RAFE PEAVEY · @XOSCOACHING</div>
+    <div class="menu-backdrop"></div>
+    <div class="menu-panel">
+      <button class="menu-toggle menu-close" aria-label="Close menu">✕</button>
+      <div class="menu-eyebrow">Menu / Navigation</div>
+      <div class="saber menu-saber"></div>
+      <nav>
+        <a href="index.html"><span class="mnum">00</span><span class="mlabel">Home</span></a>
+        <a href="about.html" aria-current="page"><span class="mnum">01</span><span class="mlabel">Who We Are</span></a>
+        <a href="training.html"><span class="mnum">02</span><span class="mlabel">What We Do</span></a>
+        <a href="players.html"><span class="mnum">03</span><span class="mlabel">Players</span></a>
+        <a href="contact.html"><span class="mnum">04</span><span class="mlabel">Contact</span></a>
+      </nav>
+      <div class="menu-foot">KOLT &amp; RAFE PEAVEY · @XOSCOACHING</div>
+      <span class="menu-watermark" aria-hidden="true">XOS</span>
+      <div class="menu-grid grid-floor" aria-hidden="true"></div>
+    </div>
   </div>
 
   <!-- LIGHT FOOTER -->
@@ -90,6 +98,6 @@
     </div>
   </footer>
 
-  <script src="js/main.js"></script>
+  <script src="js/main.js?v=20260715"></script>
 </body>
 </html>
