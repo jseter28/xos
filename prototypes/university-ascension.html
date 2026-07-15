@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>XOS University — Ascension Core</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;600;700&family=Quicksand:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#000000; --hairline:rgba(245,193,93,.22);
+  --gold:#c9a24b; --hot:#f5c15d; --core:#ffe9c4; --white:#fff;
+  --head:#fdfbf5; --text:#e9edf4; --muted:#8fa0b8;
+  --neon:245,193,93; --neon-deep:201,162,75;
+  --font-display:"Josefin Sans","Futura","Century Gothic",sans-serif;
+  --font-body:"Quicksand",-apple-system,"Segoe UI",Roboto,sans-serif;
+  --font-mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --glow-text:0 0 14px rgba(var(--neon),.6), 0 0 34px rgba(var(--neon-deep),.45);
+  --halo:0 0 6px rgba(var(--neon),.6), 0 0 18px rgba(var(--neon-deep),.4);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:var(--bg); color:var(--text); font-family:var(--font-body); font-weight:300;
+  -webkit-font-smoothing:antialiased; overflow-x:hidden;
+  background-image:
+    linear-gradient(rgba(245,193,93,.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(245,193,93,.05) 1px, transparent 1px);
+  background-size:64px 64px; background-position:center top;
+}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:radial-gradient(ellipse 90% 120% at 50% 55%, transparent 30%, rgba(0,0,0,.82) 100%);}
+
+/* ---- intro ---- */
+.intro{position:relative;z-index:2;text-align:center;padding:5.5rem 1.5rem 1rem;}
+.intro .eyebrow{font-family:var(--font-mono);font-size:.66rem;letter-spacing:.46em;
+  text-transform:uppercase;color:var(--gold);margin-bottom:1.1rem;}
+.intro h1{font-family:var(--font-display);font-weight:700;letter-spacing:.2em;text-transform:uppercase;
+  font-size:clamp(2.2rem,7vw,4rem);color:var(--head);text-shadow:var(--glow-text);}
+.intro p{max-width:40rem;margin:1.1rem auto 0;color:var(--muted);font-size:1rem;}
+.scrollcue{font-family:var(--font-mono);font-size:.58rem;letter-spacing:.4em;color:var(--gold);
+  text-transform:uppercase;margin-top:2rem;opacity:.85;}
+.scrollcue .tick{display:block;width:1px;height:34px;margin:.7rem auto 0;
+  background:linear-gradient(var(--core),transparent);box-shadow:var(--halo);
+  animation:cue 2.4s ease-in-out infinite;transform-origin:top;}
+@keyframes cue{0%,100%{transform:scaleY(.5);opacity:.4}50%{transform:scaleY(1);opacity:1}}
+
+/* ============ ASCENSION COLUMN (tall) ============ */
+.ascend{position:relative;z-index:2;width:min(760px,94vw);margin:1rem auto 0;padding:6vh 0 0;}
+/* the central conduit runs the full height of the column */
+.spine{position:absolute;left:50%;top:0;bottom:0;width:3px;transform:translateX(-50%);
+  background:linear-gradient(rgba(245,193,93,.05),rgba(245,193,93,.2) 12%,rgba(245,193,93,.2) 88%,rgba(245,193,93,.05));
+  overflow:hidden;z-index:1;}
+/* the rising energy surge that climbs the conduit on a loop */
+.spine .surge{position:absolute;left:-1px;width:5px;height:34%;bottom:-34%;
+  background:linear-gradient(transparent,rgba(255,233,196,.15) 30%,var(--core));
+  filter:blur(.3px) drop-shadow(0 0 8px rgba(245,193,93,.9));opacity:0;}
+.ascend.armed .spine .surge{animation:rise 3.4s cubic-bezier(.45,0,.2,1) infinite;}
+@keyframes rise{0%{bottom:-34%;opacity:0}8%{opacity:1}92%{opacity:1}100%{bottom:100%;opacity:0}}
+/* rising data pips */
+.pip{position:absolute;left:50%;width:5px;height:5px;border-radius:50%;transform:translateX(-50%);
+  background:var(--core);box-shadow:0 0 8px 1px rgba(255,233,196,.9);opacity:0;z-index:2;}
+.ascend.armed .pip{animation:piprise 3.4s linear infinite;}
+@keyframes piprise{0%{bottom:0;opacity:0}6%{opacity:1}70%{opacity:1}100%{bottom:100%;opacity:0}}
+
+/* a station = one level */
+.station{position:relative;min-height:clamp(230px,31vh,360px);display:flex;align-items:center;}
+.station .node{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:3;
+  width:30px;height:30px;border-radius:50%;border:1px solid var(--hairline);background:#0a0906;
+  display:flex;align-items:center;justify-content:center;transition:.6s;}
+.station .node .dot{width:9px;height:9px;border-radius:50%;background:var(--muted);transition:.6s;}
+.station.on .node{border-color:var(--hot);box-shadow:0 0 14px 2px rgba(245,193,93,.55);background:#141310;}
+.station.on .node .dot{background:var(--hot);box-shadow:0 0 8px var(--hot);}
+/* gate brackets flanking the node */
+.gate{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:2;
+  width:120px;height:1px;pointer-events:none;}
+.gate::before,.gate::after{content:"";position:absolute;top:0;width:44px;height:1px;
+  background:rgba(245,193,93,.28);transition:.6s;}
+.gate::before{left:0}.gate::after{right:0}
+.station.on .gate::before,.station.on .gate::after{background:var(--hot);box-shadow:var(--halo);}
+/* gate corner caps */
+.gate i{position:absolute;top:-5px;width:1px;height:11px;background:rgba(245,193,93,.28);transition:.6s;}
+.gate i.a{left:0}.gate i.b{right:0}
+.station.on .gate i{background:var(--hot);box-shadow:var(--halo);}
+
+/* level label block, offset to one side of the spine */
+.label{position:absolute;top:50%;transform:translateY(-50%);width:min(280px,38vw);z-index:4;
+  opacity:.25;transition:opacity .7s ease, transform .7s ease;}
+.station.left .label{right:calc(50% + 68px);text-align:right;transform:translateY(-50%) translateX(20px);}
+.station.right .label{left:calc(50% + 68px);text-align:left;transform:translateY(-50%) translateX(-20px);}
+.station.on .label{opacity:1;transform:translateY(-50%) translateX(0);}
+.label .lv{font-family:var(--font-mono);font-size:.6rem;letter-spacing:.34em;color:var(--gold);text-transform:uppercase;}
+.label h3{font-family:var(--font-display);font-weight:700;text-transform:uppercase;line-height:1;
+  font-size:clamp(1.6rem,4.4vw,2.7rem);color:var(--head);letter-spacing:.08em;margin:.5rem 0 .6rem;}
+.station.on .label h3{text-shadow:var(--glow-text);}
+.label p{font-size:.86rem;color:var(--muted);font-weight:300;line-height:1.6;}
+.label .meter{display:flex;gap:5px;margin-top:.9rem;}
+.station.left .label .meter{justify-content:flex-end;}
+.label .meter span{width:26px;height:3px;background:rgba(245,193,93,.16);transition:.5s;}
+.station.on .label .meter span{background:var(--hot);box-shadow:0 0 6px rgba(245,193,93,.7);}
+
+/* APEX — Doctorate: white-hot reticle core (self-contained; no flanking gate) */
+.station.apex .gate{display:none;}
+.station.apex .node{width:96px;height:96px;background:radial-gradient(circle,#2a2416,#0a0906);}
+.station.apex .node .dot{width:0;height:0;}
+.station.apex .node .xk{font-family:var(--font-mono);font-size:.5rem;letter-spacing:.24em;color:var(--muted);
+  position:absolute;bottom:14px;transition:.5s;}
+.station.apex.on .node .xk{color:var(--hot);}
+.station.apex .ring{position:absolute;inset:0;border-radius:50%;border:1px solid rgba(245,193,93,.3);transition:.6s;}
+.station.apex .ring.r2{inset:-16px;border-style:dashed;border-color:rgba(245,193,93,.14);}
+.station.apex.on .ring{border-color:var(--core);box-shadow:0 0 34px rgba(255,233,196,.5),inset 0 0 22px rgba(245,193,93,.4);}
+.station.apex.on .ring.r2{animation:spin 20s linear infinite;border-color:rgba(245,193,93,.3);box-shadow:none;}
+@keyframes spin{to{transform:rotate(360deg)}}
+.station.apex .cross{position:absolute;inset:0;z-index:2;}
+.station.apex .cross::before,.station.apex .cross::after{content:"";position:absolute;background:rgba(245,193,93,.35);transition:.5s;}
+.station.apex .cross::before{top:50%;left:16%;right:16%;height:1px}
+.station.apex .cross::after{left:50%;top:16%;bottom:16%;width:1px}
+.station.apex.on .cross::before,.station.apex.on .cross::after{background:var(--core);box-shadow:var(--halo);}
+.station.apex .flare{position:absolute;inset:0;border-radius:50%;border:1px solid rgba(245,193,93,.6);opacity:0;}
+.station.apex.on .flare{animation:flare 3.6s ease-out infinite;}
+@keyframes flare{0%{transform:scale(.7);opacity:.8}100%{transform:scale(2.6);opacity:0}}
+.station.apex .label h3{font-size:clamp(1.8rem,4.8vw,2.9rem);white-space:nowrap;}
+.station.apex.on .label h3{text-shadow:0 0 18px rgba(255,233,196,.8),0 0 44px rgba(245,193,93,.55);color:var(--core);}
+/* apex core is 96px + rings + flare — pull its label well clear of the node */
+.station.apex.left .label{right:calc(50% + 128px);width:min(320px,42vw);}
+
+/* IGNITION BASE at the bottom */
+.base{position:relative;z-index:3;text-align:center;padding:2rem 0 6rem;}
+.base .plate{width:min(260px,60vw);height:2px;margin:0 auto 1.4rem;
+  background:linear-gradient(90deg,transparent,var(--hot),transparent);
+  box-shadow:0 0 16px 1px rgba(245,193,93,.6);}
+.base .lbl{font-family:var(--font-mono);font-size:.62rem;letter-spacing:.4em;color:var(--gold);text-transform:uppercase;}
+.base .enroll{display:inline-flex;align-items:center;gap:.6em;margin-top:1.4rem;
+  font-family:var(--font-mono);font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;color:var(--bg);
+  background:linear-gradient(180deg,var(--core),var(--hot));padding:.95rem 2.1rem;border:1px solid var(--hot);
+  box-shadow:0 0 24px rgba(245,193,93,.5);font-weight:700;transition:.25s;text-decoration:none;}
+.base .enroll:hover{box-shadow:0 0 40px rgba(245,193,93,.85);transform:translateY(-2px);}
+
+/* reduced motion */
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important;}
+  .station{opacity:1!important;} .station .label{opacity:1!important;transform:translateY(-50%)!important;}
+  .spine .surge{opacity:1!important;bottom:33%!important;} .pip{display:none;}
+}
+
+/* tablets & narrow windows: collapse the alternating rig into a wired column
+   well before the desktop layout would get cramped (labels overflow < ~1050px) */
+@media (max-width:900px){
+  .rail{display:none;}
+  .ascend{padding-top:3vh;}
+  /* spine sits 52px in so the 64px Doctorate core (+ its rings) clears the left edge */
+  .spine{left:52px;}
+  .pip{left:52px;}
+  .station{min-height:auto;padding:2.2rem 0 2.2rem 96px;display:block;}
+  .station .node,.gate{left:52px;top:2.6rem;transform:translate(-50%,0);}
+  .station.apex .node{width:64px;height:64px;top:2rem;}
+  .gate{width:70px;}.gate::before,.gate::after{width:22px;}
+  .label,
+  .station.left .label,
+  .station.right .label,
+  .station.apex.left .label,
+  .station.on .label{position:static!important;transform:none!important;opacity:1!important;
+    width:auto!important;max-width:100%;text-align:left!important;}
+  .station.apex .label h3{white-space:normal;}
+  .station.left .label .meter{justify-content:flex-start;}
+  .base{padding-left:0;}
+}
+</style>
+</head>
+<body>
+
+<section class="intro">
+  <p class="eyebrow">XOS University · System Online</p>
+  <h1>Ascend</h1>
+  <p>Structured, progressive training — charge upward from foundational skills to elite mastery. Three levels. One trajectory.</p>
+  <div class="scrollcue">Begin Ignition<span class="tick"></span></div>
+</section>
+
+<div class="ascend" id="ascend">
+  <span class="spine"><span class="surge"></span></span>
+  <span class="pip"  style="animation-delay:0s"></span>
+  <span class="pip"  style="animation-delay:1.1s"></span>
+  <span class="pip"  style="animation-delay:2.2s"></span>
+
+  <!-- APEX first (top) -->
+  <div class="station apex left" data-i="2">
+    <span class="node"><span class="flare"></span><span class="ring r2"></span><span class="ring"></span><span class="cross"></span><span class="xk">CORE</span></span>
+    <span class="gate"><i class="a"></i><i class="b"></i></span>
+    <div class="label">
+      <div class="lv">Level 03 · Elite</div>
+      <h3>Doctorate</h3>
+      <p>Master the game at an elite level — the full playbook, at speed, under pressure.</p>
+      <div class="meter"><span></span><span></span><span></span><span></span><span></span></div>
+    </div>
+  </div>
+
+  <div class="station right" data-i="1">
+    <span class="node"><span class="dot"></span></span>
+    <span class="gate"><i class="a"></i><i class="b"></i></span>
+    <div class="label">
+      <div class="lv">Level 02 · Advanced</div>
+      <h3>Master's</h3>
+      <p>Refine advanced technique, football IQ, and reads until they're automatic.</p>
+      <div class="meter"><span></span><span></span><span></span><span></span></div>
+    </div>
+  </div>
+
+  <div class="station left" data-i="0">
+    <span class="node"><span class="dot"></span></span>
+    <span class="gate"><i class="a"></i><i class="b"></i></span>
+    <div class="label">
+      <div class="lv">Level 01 · Foundation</div>
+      <h3>Undergrad</h3>
+      <p>Build the foundational mechanics, footwork, and fundamentals every rep stands on.</p>
+      <div class="meter"><span></span><span></span><span></span></div>
+    </div>
+  </div>
+</div>
+
+<div class="base">
+  <div class="plate"></div>
+  <div class="lbl">▲ Ignition Base</div>
+  <a class="enroll" href="#">Enroll · Begin Ascent →</a>
+</div>
+
+<div style="height:3rem"></div>
+
+<script>
+(function(){
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var ascend=document.getElementById('ascend');
+  var stations=Array.prototype.slice.call(document.querySelectorAll('.station'));
+  stations.sort(function(a,b){return (+a.dataset.i)-(+b.dataset.i);}); // bottom -> top
+
+  if(reduce){
+    stations.forEach(function(s){s.classList.add('on');});
+    ascend.classList.add('armed');
+    return;
+  }
+
+  var fired=false;
+  var obs=new IntersectionObserver(function(en){
+    en.forEach(function(e){
+      if(e.isIntersecting && !fired){
+        fired=true;
+        ascend.classList.add('armed'); // conduit + pips start rising immediately
+        // ignite stations bottom -> top, timed to the surge climbing
+        stations.forEach(function(s,i){
+          setTimeout(function(){ s.classList.add('on'); }, 600 + i*900);
+        });
+      }
+    });
+  },{threshold:.15});
+  obs.observe(ascend);
+})();
+</script>
+</body>
+</html>
