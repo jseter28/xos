@@ -264,14 +264,32 @@ h1,h2,h3{font-family:var(--font-display);font-weight:700;letter-spacing:.2em;lin
   background-image:
     radial-gradient(1px 1px at 12% 18%, rgba(255,255,255,.8) 50%, transparent 50%),
     radial-gradient(1px 1px at 78% 12%, rgba(255,255,255,.5) 50%, transparent 50%),
-    radial-gradient(1px 1px at 55% 26%, rgba(var(--neon),.7) 50%, transparent 50%),
+    radial-gradient(1.6px 1.6px at 55% 26%, rgba(var(--neon),.7) 50%, transparent 50%),
     radial-gradient(1px 1px at 32% 8%,  rgba(255,255,255,.45) 50%, transparent 50%),
     radial-gradient(1px 1px at 88% 32%, rgba(var(--neon),.5) 50%, transparent 50%),
     radial-gradient(1px 1px at 45% 14%, rgba(255,255,255,.35) 50%, transparent 50%),
-    radial-gradient(1px 1px at 65% 6%,  rgba(255,255,255,.55) 50%, transparent 50%),
+    radial-gradient(1.6px 1.6px at 65% 6%,  rgba(255,255,255,.55) 50%, transparent 50%),
     radial-gradient(1px 1px at 22% 40%, rgba(255,255,255,.3) 50%, transparent 50%),
     radial-gradient(1px 1px at 92% 60%, rgba(var(--neon),.4) 50%, transparent 50%),
-    radial-gradient(1px 1px at 8% 66%,  rgba(255,255,255,.35) 50%, transparent 50%);
+    radial-gradient(1px 1px at 8% 66%,  rgba(255,255,255,.35) 50%, transparent 50%),
+    radial-gradient(1px 1px at 18% 10%, rgba(255,255,255,.5) 50%, transparent 50%),
+    radial-gradient(1px 1px at 40% 22%, rgba(255,255,255,.4) 50%, transparent 50%),
+    radial-gradient(1.6px 1.6px at 60% 16%, rgba(var(--neon),.5) 50%, transparent 50%),
+    radial-gradient(1px 1px at 72% 28%, rgba(255,255,255,.35) 50%, transparent 50%),
+    radial-gradient(1px 1px at 85% 8%,  rgba(255,255,255,.45) 50%, transparent 50%),
+    radial-gradient(1.6px 1.6px at 5% 30%,  rgba(255,255,255,.3) 50%, transparent 50%),
+    radial-gradient(1px 1px at 28% 34%, rgba(var(--neon),.45) 50%, transparent 50%),
+    radial-gradient(1px 1px at 50% 6%,  rgba(255,255,255,.5) 50%, transparent 50%),
+    radial-gradient(1px 1px at 95% 22%, rgba(255,255,255,.35) 50%, transparent 50%),
+    radial-gradient(1px 1px at 15% 52%, rgba(255,255,255,.4) 50%, transparent 50%),
+    radial-gradient(1px 1px at 38% 48%, rgba(var(--neon),.4) 50%, transparent 50%),
+    radial-gradient(1px 1px at 68% 44%, rgba(255,255,255,.3) 50%, transparent 50%),
+    radial-gradient(1.6px 1.6px at 82% 50%, rgba(255,255,255,.4) 50%, transparent 50%),
+    radial-gradient(1px 1px at 48% 38%, rgba(255,255,255,.35) 50%, transparent 50%),
+    radial-gradient(1px 1px at 3% 48%,  rgba(var(--neon),.4) 50%, transparent 50%),
+    radial-gradient(1px 1px at 58% 54%, rgba(255,255,255,.3) 50%, transparent 50%),
+    radial-gradient(1px 1px at 75% 62%, rgba(255,255,255,.35) 50%, transparent 50%),
+    radial-gradient(1.6px 1.6px at 35% 62%, rgba(255,255,255,.3) 50%, transparent 50%);
 }
 
 /* perspective gold grid floor */
@@ -358,6 +376,18 @@ h1,h2,h3{font-family:var(--font-display);font-weight:700;letter-spacing:.2em;lin
   flex-direction:column;
   background:var(--bg);
 }
+/* The wordmark + "Quarterback Development" subtitle are vertically centred in
+   the chapter, but the horizon/stadium/grid scene is anchored to the lower
+   third (bottom:34%). On TALL viewports the centred mark clears the horizon
+   line comfortably. As the window gets shorter (short desktop windows,
+   landscape phones, small phones) that line rises toward centre and would cut
+   through the subtitle. Reserving the horizon band as bottom padding on short
+   viewports makes the flex centring happen ONLY in the space ABOVE the line,
+   so the subtitle always sits above it. Tall windows are already clear and are
+   left untouched. */
+@media (max-height:820px){
+  .ch--arrival{ padding-bottom:calc(35vh + 2rem); }
+}
 .horizon{
   position:absolute;left:0;right:0;bottom:34%;height:1px;z-index:2;
   background:rgba(var(--neon),.55);
@@ -415,14 +445,13 @@ h1,h2,h3{font-family:var(--font-display);font-weight:700;letter-spacing:.2em;lin
 .arrival-sub{
   font-family:var(--font-mono);
   font-size:clamp(.6rem,1.6vw,.85rem);
-  letter-spacing:.5em;color:var(--muted);text-transform:uppercase;
+  /* Tracking scales with the viewport so the tracked line always fits on ONE
+     line: full .5em on wide screens, tightening toward .22em on narrow phones.
+     Paired with nowrap, "Development" can never drop to a second line. */
+  letter-spacing:clamp(.22em,1.2vw,.5em);color:var(--muted);text-transform:uppercase;
   margin-top:1rem;
+  white-space:nowrap;
 }
-/* The mark container shrink-wraps to the wordmark, and the subtitle's tracked
-   width lands right at that edge — sub-pixel rendering on wide displays tips
-   "Development" onto a second line. Above 640px the viewport holds the tracked
-   line comfortably, so keep it single; narrow phones still wrap gracefully. */
-@media(min-width:640px){.arrival-sub{white-space:nowrap}}
 .scroll-cue{
   position:absolute;bottom:1.5rem;left:clamp(1.25rem,5vw,3.5rem);z-index:4;
   font-family:var(--font-mono);font-size:.6rem;letter-spacing:.4em;

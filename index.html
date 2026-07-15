@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;600;700&family=Quicksand:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css?v=20260715">
+  <link rel="stylesheet" href="css/styles.css?v=20260715f">
   <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
 </head>
 <body>
@@ -47,17 +47,21 @@
                    the gap does nothing) — each is drawn BOTTOM-tip -> TOP and the
                    two IGNITE ONE AT A TIME (see the staggered --xd) like a pair of
                    lightsabers, which is why each path starts at its y=714 point.
-                   X stroke-width is 84 = the diagonal's own ink-band width. Do NOT
-                   widen it: a wider stroke overhangs the centre crossing and, while
-                   the first blade draws alone, uncovers the ROOT of the other
-                   diagonal's leg — a stub poking out of the blade. 84 keeps any
-                   leg reveal tucked inside the blade so each draws as a clean line.
+                   CRITICAL: each blade must lie exactly on the glyph diagonal's own
+                   centreline, or it clips the "/" stubs at an angle and shatters them
+                   (a floating diamond at the crossing + severed stubs). The "\" band
+                   runs (48.85,0)->(715.2,688); the "/" band runs (715.2,0)->(48.85,688);
+                   the d values below are those centrelines extended to y=-26 / y=714.
+                   stroke-width 96 = the band's perpendicular ink width — enough to
+                   cover it fully. Because "\" ignites first (--xd .16 vs .66) any
+                   centre overlap is already lit by the time "/" draws, so no stub root
+                   leaks. If you re-cut the glyph, re-derive these two centrelines.
                    The O is its ring mid-line; the S walks
                    top-bar -> right connector -> mid-bar -> left connector ->
                    bottom-bar. O/S widths verified for 100% coverage; do not lower. -->
               <mask id="xos-mask-x" maskUnits="userSpaceOnUse" x="-200" y="-212" width="3173" height="1112">
-                <path class="xos-trace" pathLength="1" style="--xd:.16s;--dur:.55s;--ease:cubic-bezier(.16,.84,.24,1)" stroke-width="84" d="M810 714L-46 -26"/>
-                <path class="xos-trace" pathLength="1" style="--xd:.66s;--dur:.55s;--ease:cubic-bezier(.16,.84,.24,1)" stroke-width="84" d="M-46 714L810 -26"/>
+                <path class="xos-trace" pathLength="1" style="--xd:.16s;--dur:.55s;--ease:cubic-bezier(.16,.84,.24,1)" stroke-width="96" d="M740.35 714L23.65 -26"/>
+                <path class="xos-trace" pathLength="1" style="--xd:.66s;--dur:.55s;--ease:cubic-bezier(.16,.84,.24,1)" stroke-width="96" d="M23.7 714L740.4 -26"/>
               </mask>
               <mask id="xos-mask-o" maskUnits="userSpaceOnUse" x="-200" y="-212" width="3173" height="1112">
                 <path class="xos-trace" pathLength="1" style="--xd:1.15s;--dur:.75s" stroke-width="150" d="M1308.4 49A381 295 0 1 1 1308.4 639A381 295 0 1 1 1308.4 49"/>
@@ -78,7 +82,14 @@
                  document, in several engines. Never add a `fill` to `.xos-glyph` in CSS:
                  CSS beats presentation attributes and would flatten the S's gradient. -->
             <g class="xos-glyphs" fill-rule="evenodd">
-              <path class="xos-glyph xos-glyph--core" mask="url(#xos-mask-x)" d="M779.6 688.0H650.8L381.5 410.8L113.2 688.0H-15.5L317.6 344.0L-15.5 0.0H113.2ZM779.6 0.0 479.8 308.6 415.9 242.8 650.8 0.0Z"/>
+              <!-- Three subpaths: the continuous "\" diagonal (corner to corner),
+                   then the two "/" stubs. The "/" is broken symmetrically about the
+                   glyph centre (382,344) — the bottom-left stub is the exact 180°
+                   point-reflection of the top-right stub, so both stop short of the
+                   "\" with equal gaps, matching the real Bruno Ace X. Do NOT re-weld
+                   the bottom-left leg into the "\": that fuses one end while the other
+                   stays broken, and the asymmetric overlap is what this replaced. -->
+              <path class="xos-glyph xos-glyph--core" mask="url(#xos-mask-x)" d="M113.2 0L779.6 688L650.8 688L-15.5 0ZM779.6 0L479.8 308.6L415.9 242.8L650.8 0ZM-15.5 688L284.3 379.4L348.2 445.2L113.2 688Z"/>
               <path class="xos-glyph xos-glyph--core" mask="url(#xos-mask-o)" d="M1738.9 344.0Q1738.9 415.7 1716.2 478.2Q1693.6 540.6 1651.9 587.7Q1610.1 634.9 1552.1 661.5Q1494.1 688.0 1423.4 688.0H1194.4Q1122.6 688.0 1064.6 661.5Q1006.6 634.9 964.9 587.7Q923.1 540.6 900.5 478.2Q877.9 415.7 877.9 344.0Q877.9 273.2 900.5 210.8Q923.1 148.4 964.9 100.7Q1006.6 53.1 1064.6 26.5Q1122.6 0.0 1194.4 0.0H1423.4Q1494.1 0.0 1552.1 26.5Q1610.1 53.1 1651.9 100.7Q1693.6 148.4 1716.2 210.8Q1738.9 273.2 1738.9 344.0ZM1640.6 344.0Q1640.6 276.2 1614.5 220.2Q1588.5 164.1 1539.8 131.2Q1491.2 98.3 1423.4 98.3H1194.4Q1126.5 98.3 1077.9 131.2Q1029.2 164.1 1002.7 220.2Q976.2 276.2 976.2 344.0Q976.2 411.8 1002.7 467.3Q1029.2 522.9 1077.9 556.3Q1126.5 589.7 1194.4 589.7H1423.4Q1491.2 589.7 1539.8 556.3Q1588.5 522.9 1614.5 467.3Q1640.6 411.8 1640.6 344.0Z"/>
               <path class="xos-glyph" mask="url(#xos-mask-s)" fill="url(#xos-s-gold)" d="M2708.0 491.4Q2708.0 545.5 2681.4 590.2Q2654.9 634.9 2610.6 661.5Q2566.4 688.0 2511.4 688.0H1913.8V589.7H2511.4Q2552.7 589.7 2581.2 560.7Q2609.7 531.7 2609.7 491.4Q2609.7 451.1 2581.2 422.1Q2552.7 393.1 2511.4 393.1H2110.4Q2056.3 393.1 2011.6 366.6Q1966.9 340.1 1940.3 295.3Q1913.8 250.6 1913.8 196.6Q1913.8 142.5 1940.3 97.8Q1966.9 53.1 2011.6 26.5Q2056.3 0.0 2110.4 0.0H2658.8V98.3H2110.4Q2070.1 98.3 2041.1 127.3Q2012.1 156.3 2012.1 196.6Q2012.1 236.9 2041.1 265.9Q2070.1 294.9 2110.4 294.9H2511.4Q2566.4 294.9 2610.6 321.4Q2654.9 347.9 2681.4 392.7Q2708.0 437.4 2708.0 491.4Z"/>
             </g>
