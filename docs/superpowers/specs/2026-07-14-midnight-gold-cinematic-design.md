@@ -22,15 +22,19 @@ redesign:
 
 ## Palette — "Midnight Gold" (gold neon on black)
 
-The background ramp was originally deep navy; it is now neutral black. The three
-`bg*` steps keep their relative luminance, so the depth gradients still read —
-they fade through greys instead of blue.
+The background ramp was originally deep navy, then neutral black with grey depth
+steps. It is now **flat pure black** across every section and chapter — the
+depth gradients have been removed and all page/section/chapter backgrounds
+resolve to `bg` (`#000000`). The `bg-mid` and `bg-warm` tokens remain defined
+but are no longer used for section backgrounds; the only remaining consumer is
+the dossier card face (`.dossier`), which needs to sit off pure black to read
+as a card.
 
 | Token | Value |
 |---|---|
-| bg | `#000000` |
-| bg-mid | `#0c0c0e` |
-| bg-warm | `#17171b` |
+| bg | `#000000` (all section/chapter backgrounds) |
+| bg-mid | `#0c0c0e` (legacy depth step — now only via dossier cards) |
+| bg-warm | `#17171b` (legacy depth step — now only via dossier cards) |
 | panel | `rgba(28,28,32,0.45)` |
 | hairline | `rgba(245,193,93,0.22)` |
 | gold | `#c9a24b` |
