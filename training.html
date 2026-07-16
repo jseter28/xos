@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;600;700&family=Quicksand:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css?v=20260715">
+  <link rel="stylesheet" href="css/styles.css?v=20260715j">
   <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
   <style>
   /* ============================================================
@@ -69,7 +69,7 @@
 
   /* ============ HERO / RETICLE CORE ============ */
   .stage{
-    position:relative;min-height:100vh;display:flex;flex-direction:column;
+    position:relative;min-height:100vh;min-height:100svh;display:flex;flex-direction:column;
     align-items:center;justify-content:center;text-align:center;
     padding:9rem 1.25rem 5rem;
   }
@@ -276,17 +276,15 @@
   .coach-console .roster-label{position:absolute;left:50%;bottom:-1.6rem;transform:translateX(-50%);font-family:var(--font-mono);font-size:.52rem;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);white-space:nowrap;}
   .coach-console .roster-label b{color:var(--hot);}
 
-  /* phones: stack modules, wrap roster, hub between */
+  /* phones: vertical command rig — modules stacked on the centre axis, hub
+     below, roster fanned under it. The .wires SVG stays LIVE: the JS rebuilds
+     the filaments from the stacked geometry (bottom-centre ports -> hub ->
+     units), so the drawn wires + travelling pips match desktop identity. */
   @media (max-width:720px){
-    .coach-console .console{height:auto;max-height:none;display:flex;flex-direction:column;gap:1.2rem;padding-left:30px;}
-    .coach-console .wires{display:none;}
+    .coach-console .console{height:auto;max-height:none;display:flex;flex-direction:column;gap:1.6rem;}
     .coach-console .module{position:relative;top:auto!important;left:auto!important;transform:none!important;width:100%;}
-    .coach-console .module .port{display:none;}
     .coach-console .hub{position:relative;left:auto;top:auto;transform:none;width:150px;height:150px;margin:.6rem auto;}
-    .coach-console .hub .cast{display:none;}
     .coach-console .roster{position:relative;bottom:auto;flex-wrap:wrap;gap:14px;margin-top:.4rem;padding-bottom:1.6rem;}
-    /* wired spine down the left on mobile */
-    .coach-console .console::before{content:"";position:absolute;left:11px;top:10px;bottom:40px;width:1px;background:linear-gradient(var(--gold),rgba(245,193,93,.12));box-shadow:var(--halo);}
   }
 
   /* reduced motion: console static-on */
@@ -410,35 +408,59 @@
 
   /* ============ RESPONSIVE — stack the rig into a wired column ============ */
   @media (max-width:760px){
-    /* Fixed corner telemetry + center cross float over the headline and CTA on a
-       narrow viewport (they can't clear centered full-width content), and r-tr
-       clips off the right edge. Hide the floating readout text on phone; keep the
-       corner brackets so the cockpit frame survives. */
-    .hud-read{display:none!important;}
-    .hud-cross{display:none!important;}
+    /* Keep the cockpit identity on phone: all four corner telemetry blocks,
+       compact scale. Top pair clears the fixed header (~72px: 1rem padding +
+       40px controls); hero content is vertically centred so nothing collides
+       with the h1 at 390/375. Bottom pair sits inside the corner brackets
+       (bracket inset 18px, text inset 30px — same relationship as desktop). */
+    .hud-read{font-size:.5rem;letter-spacing:.18em;line-height:1.7;}
+    .hud-read.r-tl{top:76px;left:16px;}
+    .hud-read.r-tr{top:76px;right:16px;}
+    .hud-read.r-bl{bottom:30px;left:30px;}
+    .hud-read.r-br{bottom:30px;right:30px;}
+    /* hero crosshair: reduced, below the top telemetry (~76+41px), decorative */
+    .hud-cross{top:124px;font-size:.5rem;letter-spacing:.3em;opacity:.85;}
+    .hud-cross .tick{height:12px;}
 
-    /* tighter vertical rhythm — the desktop paddings are oversized on phone */
+    /* tighter vertical rhythm — the desktop paddings are oversized on phone.
+       Section top padding is 130px so a full-width centred heading first
+       paints BELOW the fixed corner telemetry band (top:76px + 3 lines ends
+       ~y117) when a section top lands at the scroll position. */
     .stage{padding:6.5rem 1.25rem 3.5rem;}
-    .panel{padding:4rem 1.25rem;}
+    .panel{padding:130px 1.25rem 4rem;}
+    .uni .intro{padding-top:130px;}
     .cta{padding:4rem 1.25rem 5rem;}
     .sec-sub{margin-bottom:2.25rem;}
 
-    .rig{height:auto;max-height:none;display:flex;flex-direction:column;gap:0;padding-left:26px;
+    /* ---- PLAYER SYSTEMS: vertical cockpit rig ----
+       One centre axis: SYS 01, then the reticle core, then SYS 02 + SYS 03,
+       joined by a centred filament with the anchor dots ON the line. */
+    .rig{height:auto;max-height:none;display:flex;flex-direction:column;gap:0;padding-left:0;
       border-left:none;}
     .filaments{display:none;}
     .core-pulse{display:none;}
-    .core{position:relative;top:auto;left:auto;transform:none;width:100%;height:auto;
-      padding:1.4rem 0;margin-bottom:.5rem;}
-    .core .ring,.core .reticle-line{display:none;}
+    .spine-v{display:none;} /* replaced by per-block wire segments below */
+    .system[data-sys="1"]{order:-1;} /* SYS 01 above the core (DOM has core first) */
+    /* Each block draws its own centred segment of the filament, so the wire
+       always terminates exactly at the first/last dot regardless of how the
+       text wraps at 375/390 — no hardcoded rig-level offsets. */
+    .system::before,.core::before{content:"";position:absolute;left:calc(50% - .5px);
+      top:0;bottom:0;width:1px;
+      background:linear-gradient(rgba(245,193,93,.32),rgba(245,193,93,.18));
+      box-shadow:0 0 5px rgba(245,193,93,.3);}
+    .system[data-sys="1"]::before{top:25px;}               /* starts at SYS 01's dot centre */
+    .system[data-sys="3"]::before{bottom:auto;height:25px;} /* ends at SYS 03's dot centre */
+    /* scaled reticle core, centred in the flow; rings + crosshair + text kept */
+    .core{position:relative;top:auto;left:auto;transform:none;width:188px;height:188px;
+      margin:0 auto;flex:none;}
     .core .xos{font-size:2rem}
     .system,.system.center{position:relative;top:auto!important;left:auto!important;transform:none!important;
-      width:100%;text-align:left!important;padding:1.4rem 0 1.4rem 1.6rem;max-width:none;}
-    .system.left .sys-badge,.system.center .sys-badge{flex-direction:row;justify-content:flex-start;}
-    .sys-anchor{left:-30px!important;right:auto!important;top:1.9rem!important;transform:none!important;}
-    .system.left .sys-anchor{right:auto!important;}
+      width:100%;text-align:center!important;padding:2.75rem 0 1.75rem;max-width:none;}
+    .system .sys-badge,.system.left .sys-badge,.system.center .sys-badge{flex-direction:row;justify-content:center;}
+    .system p{max-width:36ch;margin-left:auto;margin-right:auto;}
+    /* dots centred ON the filament, above each system's badge (centre y=25px) */
+    .sys-anchor{left:50%!important;right:auto!important;top:20px!important;transform:translateX(-50%)!important;}
     .readouts{grid-template-columns:1fr;}
-    .spine-v{position:absolute;left:26px;top:150px;bottom:80px;width:1px;
-      background:linear-gradient(var(--gold),rgba(245,193,93,.12));box-shadow:var(--halo);z-index:1;}
   }
 
   /* XOS University — collapse the alternating rig into a wired column
@@ -469,10 +491,10 @@
     .stage{padding:6rem 1rem 3rem;}
     .stage h1{font-size:clamp(1.9rem,8vw,2.4rem);}
     .intro{font-size:.95rem;}
-    .panel{padding:3.25rem 1rem;}
+    /* keep the 130px top clearance under the fixed corner telemetry */
+    .panel{padding:130px 1rem 3.25rem;}
     .cta{padding:3.5rem 1rem 4.5rem;}
     .core .xos{font-size:1.8rem;}
-    .system{padding-left:1.3rem;}
     .system h3{font-size:.92rem;}
     .readout{padding:1.5rem 1.3rem;}
   }
@@ -961,7 +983,8 @@
       return {x:r.left-rr.left+r.width/2, y:r.top-rr.top+(dir<0?0:r.height)};}
 
     function build(){
-      if(window.innerWidth<=720){svg.innerHTML='';livePaths=[];return;}
+      /* draws at ALL widths: on phones the stacked flex layout yields vertical
+         module->hub feeds and a hub->roster fan, same wires + pips as desktop */
       svg.innerHTML='';livePaths=[];
       var rr=rig.getBoundingClientRect();
       svg.setAttribute('viewBox','0 0 '+rr.width+' '+rr.height);
@@ -983,6 +1006,10 @@
       // hub -> each roster unit (broadcast out)
       var hb={x:hc.x,y:hc.y+70};
       units.forEach(function(u){var c=center(u);mkPath(hb,{x:c.x,y:c.y-8},-18,'cast');});
+      // restore powered-on wires after a rebuild (resize/orientation change) —
+      // fresh paths start unlit, so re-light the ones whose source is online
+      modules.forEach(function(m){if(m.classList.contains('online'))goLive(m.getAttribute('data-mod'));});
+      if(hub.classList.contains('on'))goLive('cast');
     }
 
     var t0=null;
@@ -998,6 +1025,9 @@
     build();
     if(!reduce)requestAnimationFrame(frame);
     var rt;window.addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(build,180);});
+    // on phones the console height is content-driven, so late font loading can
+    // shift the stacked geometry after the first draw — rebuild once settled
+    window.addEventListener('load',build);
 
     function goLive(sel){
       // for modules there is one path; for 'cast' there are many

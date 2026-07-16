@@ -183,10 +183,10 @@ h1,h2,h3{font-family:var(--font-display);font-weight:700;letter-spacing:.2em;lin
 }
 .menu-saber{position:relative;z-index:1;margin:.85rem 0 1.9rem;width:100%}
 
-.site-menu nav{display:flex;flex-direction:column;gap:1.1rem;position:relative;z-index:1}
+.site-menu nav{display:flex;flex-direction:column;gap:.1rem;position:relative;z-index:1}
 .site-menu nav a{
   display:flex;align-items:baseline;gap:1rem;width:fit-content;position:relative;
-  padding-bottom:.25rem;color:var(--text);transition:color .18s ease;
+  padding:1rem 0 .25rem;color:var(--text);transition:color .18s ease;
 }
 .site-menu nav a .mnum{
   font-family:var(--font-mono);font-size:.72rem;letter-spacing:.2em;
@@ -442,6 +442,19 @@ h1,h2,h3{font-family:var(--font-display);font-weight:700;letter-spacing:.2em;lin
   animation:xos-draw var(--dur,.6s) var(--ease,cubic-bezier(.22,.78,.3,1)) var(--xd,0s) both;
 }
 @keyframes xos-draw{to{stroke-dashoffset:0}}
+/* Very short viewports (phone landscape, e.g. 844x390): the 820 block's tall
+   bottom padding + a vw-scaled wordmark push the subtitle below the horizon and
+   overflow the scroll cue. Shrink the mark to a vh scale and drop the reserved
+   band so the mark + subtitle sit above the horizon and the chapter stays ~100svh.
+   Placed AFTER the base .xos-mark rule (line ~416) so the width override wins. */
+@media (max-height:500px){
+  .xos-mark{width:clamp(12rem,60vh,22rem)}
+  /* Reserve the horizon band so the centred mark+subtitle group sits fully
+     above the horizon (bottom:34%). Measured at 844x390: 38vh puts the
+     subtitle bottom ~y240, ~17px clear of the line, without overflowing the
+     ~100svh chapter. */
+  .ch--arrival{padding-bottom:38vh}
+}
 .arrival-sub{
   font-family:var(--font-mono);
   font-size:clamp(.6rem,1.6vw,.85rem);
@@ -516,8 +529,11 @@ h1,h2,h3{font-family:var(--font-display);font-weight:700;letter-spacing:.2em;lin
 .coach-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:30% 20%}
 .coach-photo .duotone-layer{position:absolute;inset:0;filter:var(--duotone)}
 .coach-photo .duotone-layer img{position:static;width:100%;height:100%;object-fit:cover;object-position:30% 20%}
+/* Mobile: the 42vh photo band hard-cuts to black; fade the bottom into the copy. */
+.coach-photo::after{content:"";position:absolute;left:0;right:0;bottom:0;height:40%;background:linear-gradient(to bottom,transparent,#000);pointer-events:none;}
 @media(min-width:860px){
-  .coach-photo::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent 60%,var(--bg));}
+  /* height:auto neutralises the mobile bottom-fade height so inset:0 fills again — pixel-identical to before */
+  .coach-photo::after{content:"";position:absolute;inset:0;height:auto;background:linear-gradient(90deg,transparent 60%,var(--bg));}
 }
 .coach-copy{display:flex;flex-direction:column;justify-content:center;padding:clamp(2rem,5vw,4rem)}
 .coach-copy h3{font-family:var(--font-display);font-size:clamp(1.2rem,2.6vw,2rem);color:var(--head);line-height:1.15;text-shadow:0 0 16px rgba(var(--neon),.35)}
@@ -657,7 +673,14 @@ h1,h2,h3{font-family:var(--font-display);font-weight:700;letter-spacing:.2em;lin
 .field input,.field select,.field textarea{
   width:100%;background:rgba(10,18,34,.6);border:1px solid var(--hairline);border-radius:4px;
   color:var(--text);padding:.7rem;font-family:var(--font-body);
+  /* 16px minimum on mobile: below 16px iOS Safari auto-zooms the page on focus.
+     Desktop (>=900px below) restores the browser-default 13.3333px these
+     controls previously computed to, so desktop stays pixel-identical. */
+  font-size:1rem;
   transition:border-color .2s,box-shadow .2s;
+}
+@media(min-width:900px){
+  .field input,.field select,.field textarea{font-size:13.3333px}
 }
 .field input::placeholder,.field textarea::placeholder{color:var(--muted)}
 .field-row{display:grid;grid-template-columns:1fr;gap:.85rem}
